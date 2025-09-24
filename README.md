@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Matheus Araujo Carvalho
 
-## Getting Started
+Portfolio profissional desenvolvido com Next.js 15, TypeScript e Tailwind CSS, componentizado e otimizado para performance e acessibilidade.
 
-First, run the development server:
+## 🚀 Tecnologias
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 15** - Framework React com App Router
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Estilização utilitária
+- **shadcn/ui** - Componentes de UI
+- **Framer Motion** - Animações
+- **Lucide React** - Ícones
+
+## 📁 Estrutura do Projeto
+
+```
+src/
+├── app/                    # App Router do Next.js
+│   ├── layout.tsx         # Layout principal
+│   ├── page.tsx           # Página inicial
+│   └── globals.css        # Estilos globais
+├── components/            # Componentes React
+│   ├── ui/               # Componentes shadcn/ui
+│   ├── sections/         # Seções específicas
+│   ├── Header.tsx        # Cabeçalho e navegação
+│   ├── Hero.tsx          # Seção hero
+│   ├── Section.tsx       # Componente de seção genérico
+│   ├── ContactForm.tsx   # Formulário de contato
+│   ├── PaymentSection.tsx # Seção de pagamento
+│   ├── Footer.tsx        # Rodapé
+│   └── PortfolioPage.tsx # Componente principal
+├── data/                 # Dados e conteúdo
+│   ├── personal.ts       # Informações pessoais
+│   └── content.ts        # Conteúdo das seções
+├── hooks/                # Hooks personalizados
+│   └── useHashRoute.ts   # Hook para navegação por hash
+├── types/                # Definições TypeScript
+│   └── index.ts          # Interfaces e tipos
+└── lib/                  # Utilitários
+    └── utils.ts          # Funções utilitárias
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ✅ **Responsivo** - Design mobile-first
+- ✅ **Acessível** - WCAG 2.1 compliant
+- ✅ **Performance** - Otimizado com Next.js
+- ✅ **SEO** - Meta tags e estrutura semântica
+- ✅ **Navegação** - SPA com hash routing
+- ✅ **Componentizado** - Arquitetura modular
+- ✅ **TypeScript** - Tipagem completa
+- ✅ **Pagamento** - Integração PIX e checkout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Instalação e Execução
 
-## Learn More
+```bash
+# Instalar dependências
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Executar em desenvolvimento
+npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Build para produção
+npm run build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Executar build de produção
+npm start
+```
 
-## Deploy on Vercel
+## 📝 Personalização
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Dados Pessoais
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Edite o arquivo `src/data/personal.ts` para alterar:
+
+- Nome e título
+- Bio e avatar
+- Contatos e redes sociais
+- Chaves PIX e links de pagamento
+
+### Conteúdo
+
+Modifique `src/data/content.ts` para atualizar:
+
+- Formações e certificações
+- Serviços oferecidos
+- Projetos em destaque
+- Artigos e publicações
+
+### Estilos
+
+- Cores: `src/app/globals.css`
+- Componentes: `src/components/ui/`
+- Layout: `tailwind.config.js`
+
+## 🎨 Design System
+
+O projeto utiliza o design system do shadcn/ui com:
+
+- **Cores**: Sistema de cores neutras
+- **Tipografia**: Geist Sans e Geist Mono
+- **Componentes**: Button, Card, Input, Badge, Tooltip
+- **Animações**: Framer Motion com reduced motion
+
+## 📱 Responsividade
+
+- **Mobile**: 320px+
+- **Tablet**: 768px+
+- **Desktop**: 1024px+
+- **Large**: 1280px+
+
+## ♿ Acessibilidade
+
+- Skip links para navegação por teclado
+- Landmarks semânticos (header, main, footer)
+- Contraste de cores WCAG AA
+- Suporte a reduced motion
+- Labels e ARIA attributes
+
+## 🚀 Deploy
+
+O projeto está configurado para deploy em:
+
+- **Vercel** (recomendado)
+- **Netlify**
+- **GitHub Pages**
+- Qualquer plataforma que suporte Next.js
+
+## 📄 Licença
+
+Todos os direitos reservados - Matheus Araujo Carvalho
