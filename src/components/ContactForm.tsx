@@ -1,103 +1,120 @@
-"use client";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Send, Clock } from "lucide-react";
+import { toast } from "sonner";
 
-import { Mail, Phone, Linkedin, Github, Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { PersonalInfo } from "@/types";
+export function ContactForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-interface ContactFormProps {
-  personalInfo: PersonalInfo;
-}
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-export function ContactForm({ personalInfo }: ContactFormProps) {
+    // Simular envio
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    toast.success("Mensagem enviada com sucesso! Respondo em até 24h úteis.");
+    setFormData({ name: "", email: "", message: "" });
+    setIsSubmitting(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
-    <Card className="rounded-2xl">
-      <CardContent className="py-6">
-        <div className="grid sm:grid-cols-2 gap-6">
-          {/* Formulário simples via mailto */}
-          <form
-            className="grid gap-3"
-            action={`mailto:${personalInfo.email}`}
-            method="post"
-            encType="text/plain"
-            aria-label="Formulário de contato">
-            <div>
-              <label htmlFor="nome" className="text-sm">
-                Nome
-              </label>
-              <Input id="nome" name="nome" required placeholder="Seu nome" />
+    <Card className="bg-card border-border">
+      <CardHeader>
+        <CardTitle className="text-xl text-card-foreground">Enviar Mensagem</CardTitle>
+        <CardDescription className="text-muted-foreground">
+          Descreva seu projeto ou necessidade. Vou responder com uma proposta personalizada.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-sm">
+                Nome completo
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="bg-input-background border-border text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-accent"
+                placeholder="Seu nome"
+              />
             </div>
-            <div>
-              <label htmlFor="email" className="text-sm">
-                E‑mail
-              </label>
-              <Input id="email" name="email" required type="email" placeholder="voce@email.com" />
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm">
+                E-mail
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="bg-input-background border-border text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-accent"
+                placeholder="seu@email.com"
+              />
             </div>
-            <div>
-              <label htmlFor="msg" className="text-sm">
-                Mensagem
-              </label>
-              <Textarea id="msg" name="mensagem" required placeholder="Como posso ajudar?" />
-            </div>
-            <div className="flex gap-2">
-              <Button type="submit" className="rounded-full">
-                Enviar
-              </Button>
-              <Button asChild variant="outline" className="rounded-full">
-                <a
-                  href={`https://wa.me/5571000000000?text=Oi%20Matheus%2C%20vim%20pelo%20seu%20portf%C3%B3lio.`}>
-                  WhatsApp
-                </a>
-              </Button>
-            </div>
-          </form>
+          </div>
 
-          {/* Acesso rápido */}
-          <div className="grid gap-3 content-start">
-            <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4" />
-              <a className="underline underline-offset-4" href={`mailto:${personalInfo.email}`}>
-                {personalInfo.email}
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              <a className="underline underline-offset-4" href={`tel:${personalInfo.phone}`}>
-                {personalInfo.phone}
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Linkedin className="w-4 h-4" />
-              <a
-                className="underline underline-offset-4"
-                href={personalInfo.socials.linkedin}
-                target="_blank"
-                rel="noreferrer">
-                LinkedIn
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Github className="w-4 h-4" />
-              <a
-                className="underline underline-offset-4"
-                href={personalInfo.socials.github}
-                target="_blank"
-                rel="noreferrer">
-                GitHub
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Twitter className="w-4 h-4" />
-              <a
-                className="underline underline-offset-4"
-                href={personalInfo.socials.twitter}
-                target="_blank"
-                rel="noreferrer">
-                Twitter
-              </a>
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="message" className="text-sm">
+              Mensagem
+            </Label>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows={4}
+              className="bg-input-background border-border text-foreground placeholder:text-muted-foreground focus:border-accent focus:ring-accent resize-none"
+              placeholder="Descreva seu projeto, necessidade ou dúvida..."
+            />
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+            {isSubmitting ? (
+              <div className="flex items-center">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2"></div>
+                Enviando...
+              </div>
+            ) : (
+              <>
+                <Send className="w-4 h-4 mr-2" />
+                Enviar mensagem
+              </>
+            )}
+          </Button>
+        </form>
+
+        <div className="mt-6 pt-6 border-t border-border">
+          <div className="flex items-center text-sm text-muted-foreground">
+            <Clock className="w-4 h-4 mr-2" />
+            Tempo médio de resposta: 24h úteis
           </div>
         </div>
       </CardContent>
