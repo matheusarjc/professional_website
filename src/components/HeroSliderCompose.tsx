@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
-import estrategistaImage from "../assets/ec033549ae459485d1b6ff58d6dedf4fda2c6f3f.png";
-import investimentosImage from "../assets/4bc528308be412047376ac29fba78acc18182ad8.png";
+import estrategistaImage from "figma:asset/ec033549ae459485d1b6ff58d6dedf4fda2c6f3f.png";
+import investimentosImage from "figma:asset/4bc528308be412047376ac29fba78acc18182ad8.png";
 
 type PersonaType = "estrategista" | "investimentos" | null;
 
@@ -62,14 +62,12 @@ export function HeroSliderCompose() {
       className="min-h-screen flex flex-col justify-center pt-20 pb-12 lg:pt-32 lg:pb-20">
       <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
         {/* Main Heading */}
-        <div className=" text-center mb-12 lg:mb-10 flex flex-col gap-1">
-          <h1 className="text-3xl lg:text-5xl xl:text-6xl text-foreground font-bold leading-tight m-0">
-            Sou Matheus Araujo,
+        <div className="text-center mb-12 lg:mb-16">
+          <h1 className="text-3xl lg:text-5xl xl:text-6xl mb-6 lg:mb-8 text-foreground">
+            Estratégia, Produto e Patrimônio —
+            <br className="hidden sm:block" />
+            <span className="text-accent">com experiência que converte.</span>
           </h1>
-          <span className="text-accent font-light lg:text-lg lg:w-7/12 mx-auto">
-            "A única coisa que fica entre você e seu objetivo é a história que você continua
-            contando do por que você não pode alcançá-lo." <br /> - Jordan Belfort
-          </span>
         </div>
 
         {/* Dual Persona Layout */}
@@ -104,11 +102,9 @@ export function HeroSliderCompose() {
                     ? "opacity-100"
                     : "opacity-0 group-hover:opacity-100"
                 }`}>
-                <div className="text-card-foreground">
-                  <h3 className="text-xl lg:text-2xl mb-3 font-semibold">
-                    {personaData.estrategista.title}
-                  </h3>
-                  <p className="text-sm lg:text-base mb-4 text-card-foreground/90">
+                <div className="text-primary-foreground">
+                  <h3 className="text-xl lg:text-2xl mb-3">{personaData.estrategista.title}</h3>
+                  <p className="text-sm lg:text-base mb-4 text-primary-foreground/90">
                     {personaData.estrategista.microBio}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-6">
@@ -122,10 +118,10 @@ export function HeroSliderCompose() {
                     ))}
                   </div>
                   <Button
-                    variant="secondary"
+                    variant="outline"
                     size="sm"
-                    className="border-card-foreground text-card-foreground hover:bg-card-foreground hover:text-card"
-                    onClick={(e) => {
+                    className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                    onClick={(e: React.MouseEvent) => {
                       e.stopPropagation();
                       scrollToSection(personaData.estrategista.targetSection);
                     }}>
@@ -167,11 +163,9 @@ export function HeroSliderCompose() {
                     ? "opacity-100"
                     : "opacity-0 group-hover:opacity-100"
                 }`}>
-                <div className="text-card-foreground">
-                  <h3 className="text-xl lg:text-2xl mb-3 font-semibold">
-                    {personaData.investimentos.title}
-                  </h3>
-                  <p className="text-sm lg:text-base mb-4 text-card-foreground/90">
+                <div className="text-primary-foreground">
+                  <h3 className="text-xl lg:text-2xl mb-3">{personaData.investimentos.title}</h3>
+                  <p className="text-sm lg:text-base mb-4 text-primary-foreground/90">
                     {personaData.investimentos.microBio}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-6">
@@ -185,10 +179,10 @@ export function HeroSliderCompose() {
                     ))}
                   </div>
                   <Button
-                    variant="secondary"
+                    variant="outline"
                     size="sm"
-                    className="border-card-foreground text-card-foreground hover:bg-card-foreground hover:text-card"
-                    onClick={(e) => {
+                    className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                    onClick={(e: React.MouseEvent) => {
                       e.stopPropagation();
                       scrollToSection(personaData.investimentos.targetSection);
                     }}>
