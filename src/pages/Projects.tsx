@@ -395,7 +395,7 @@ export function Projects({ onNavigate }: ProjectsProps) {
       </section>
 
       {/* Projects Showcase */}
-      <section className="py-20 lg:py-32 bg-card/50 relative overflow-hidden">
+      <section className=" bg-card/50 relative overflow-hidden">
         {/* Animated Background Grid */}
         <motion.div
           className="absolute inset-0 opacity-5"
@@ -912,19 +912,6 @@ export function Projects({ onNavigate }: ProjectsProps) {
 
       {/* CTA Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
-        {/* Animated Background */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5"
-          animate={{
-            background: [
-              "linear-gradient(45deg, rgba(129, 216, 208, 0.05), transparent, rgba(11, 43, 75, 0.05))",
-              "linear-gradient(225deg, rgba(11, 43, 75, 0.05), transparent, rgba(129, 216, 208, 0.05))",
-              "linear-gradient(45deg, rgba(129, 216, 208, 0.05), transparent, rgba(11, 43, 75, 0.05))",
-            ],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-
         {/* Floating Elements */}
         <motion.div
           className="absolute w-32 h-32 border border-accent/20 rounded-full"
@@ -957,18 +944,9 @@ export function Projects({ onNavigate }: ProjectsProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}>
-            <motion.h2
-              className="text-3xl lg:text-4xl mb-6"
-              animate={{
-                background: [
-                  "linear-gradient(45deg, #F5F8FA, #81D8D0, #F5F8FA)",
-                  "linear-gradient(225deg, #81D8D0, #F5F8FA, #81D8D0)",
-                  "linear-gradient(45deg, #F5F8FA, #81D8D0, #F5F8FA)",
-                ],
-              }}
-              transition={{ duration: 4, repeat: Infinity }}
-              style={{ backgroundClip: "text", WebkitBackgroundClip: "text" }}>
-              Vamos <span className="text-accent">colaborar</span>
+            <motion.h2 className="text-3xl lg:text-4xl mb-6">
+              Vamos criar algo que <span className="text-accent font-bold">atraia</span> e{" "}
+              <span className="text-accent font-bold">converta</span>
             </motion.h2>
             <motion.p
               className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"

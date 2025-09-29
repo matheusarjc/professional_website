@@ -1,7 +1,16 @@
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
-import { ArrowRight, Code2, Zap, TrendingUp, ExternalLink, Github, Target } from "lucide-react";
+import {
+  ArrowRight,
+  Code2,
+  Zap,
+  TrendingUp,
+  ExternalLink,
+  Github,
+  Target,
+  Download,
+} from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 import professionalImage from "figma:asset/4bc528308be412047376ac29fba78acc18182ad8.png";
 
@@ -82,7 +91,7 @@ export function Home({ onNavigate }: HomeProps) {
       animate="visible"
       variants={containerVariants}>
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
@@ -113,22 +122,27 @@ export function Home({ onNavigate }: HomeProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
             <motion.div variants={itemVariants}>
-              <motion.h1
-                className="text-4xl lg:text-6xl mb-6 leading-tight"
-                initial={{ opacity: 0, y: 50 }}
+              <motion.h2
+                className="font-light text-2xl text-muted-foreground"
+                initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}>
                 Full-stack Developer &{" "}
                 <motion.span
-                  className="text-accent"
+                  className=""
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 1.0 }}>
                   Product Strategist
-                </motion.span>{" "}
-                para fintechs e healthtechs.
+                </motion.span>
+              </motion.h2>
+              <motion.h1
+                className="text-4xl lg:text-6xl mb-6 leading-tight font-bold"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}>
+                Matheus Araujo
               </motion.h1>
-
               <motion.p
                 className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl"
                 initial={{ opacity: 0, y: 30 }}
@@ -137,43 +151,76 @@ export function Home({ onNavigate }: HomeProps) {
                 Código limpo, acessível e orientado a métricas. Menos complexidade, mais
                 performance.
               </motion.p>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    onClick={() => onNavigate("projects")}
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground relative overflow-hidden group">
-                    <motion.div
-                      className="absolute inset-0 bg-accent/20"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "100%" }}
-                      transition={{ duration: 0.5 }}
-                    />
-                    <span className="relative z-10 flex items-center">
-                      Ver projetos
+              {/* Buttons */}
+              <motion.div className="flex flex-col sm:flex-row gap-4">
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                      onClick={() => onNavigate("projects")}
+                      size="lg"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground relative overflow-hidden group">
                       <motion.div
-                        animate={{ x: [0, 3, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}>
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </motion.div>
-                    </span>
-                  </Button>
+                        className="absolute inset-0 bg-accent/20"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.5 }}
+                      />
+                      <span className="relative z-10 flex items-center">
+                        Ver projetos
+                        <motion.div
+                          animate={{ x: [0, 3, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}>
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </motion.div>
+                      </span>
+                    </Button>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                      onClick={() => onNavigate("contact")}
+                      variant="outline"
+                      size="lg"
+                      className="border-border hover:border-accent/20 hover:text-accent">
+                      Fale comigo
+                    </Button>
+                  </motion.div>
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    onClick={() => onNavigate("contact")}
-                    variant="outline"
-                    size="lg"
-                    className="border-border hover:border-accent/20 hover:text-accent">
-                    Fale comigo
-                  </Button>
+                <motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                      onClick={() => {
+                        // Simular download do CV
+                        const link = document.createElement("a");
+                        link.href = "/cv-matheus-araujo.pdf"; // Substitua pelo caminho real do CV
+                        link.download = "CV-Matheus-Araujo.pdf";
+                        link.click();
+                      }}
+                      size="lg"
+                      className="w-full max-w-sm bg-accent hover:bg-accent/90 text-accent-foreground relative overflow-hidden group">
+                      <motion.div
+                        className="absolute inset-0 bg-primary/20"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.5 }}
+                      />
+                      <span className="relative z-10 flex items-center justify-center gap-3">
+                        <motion.div
+                          animate={{ y: [0, -2, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}>
+                          <Download className="w-5 h-5" />
+                        </motion.div>
+                        Download CV
+                      </span>
+                    </Button>
+                  </motion.div>
                 </motion.div>
               </motion.div>
+              {/* Icons Tools */}
+              /* TODO: Add icons tools */
             </motion.div>
 
             {/* Professional Image */}
@@ -196,7 +243,7 @@ export function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Value Proposition Cards */}
-      <section className="py-20 lg:py-32 bg-card/30 relative overflow-hidden">
+      <section className="py-12 lg:py-20 bg-card/30 relative overflow-hidden">
         {/* Subtle Background Pattern */}
         <motion.div
           className="absolute inset-0 opacity-5"
@@ -290,7 +337,7 @@ export function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-20 lg:py-32 relative">
+      <section className="py-12 lg:py-20 relative">
         <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <motion.div
             className="text-center mb-16"
@@ -446,7 +493,7 @@ export function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Trust Signal */}
-      <section className="py-20 lg:py-32 bg-card/30 relative overflow-hidden">
+      <section className="py-12 lg:py-20 bg-card/30 relative overflow-hidden">
         {/* Animated Background Elements */}
         <motion.div
           className="absolute w-64 h-64 border border-accent/10 rounded-full"

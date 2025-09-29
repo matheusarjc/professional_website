@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { Button } from './ui/button';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Button } from "./ui/button";
+import { Menu, X } from "lucide-react";
 
 interface HeaderProps {
-  variant?: 'translucent' | 'solid';
+  variant?: "translucent" | "solid";
   currentPage?: string;
   onNavigate?: (page: string) => void;
 }
 
-export function Header({ variant = 'translucent', currentPage = 'home', onNavigate }: HeaderProps) {
+export function Header({ variant = "translucent", currentPage = "home", onNavigate }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,8 +16,8 @@ export function Header({ variant = 'translucent', currentPage = 'home', onNaviga
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavigation = (page: string) => {
@@ -28,30 +28,28 @@ export function Header({ variant = 'translucent', currentPage = 'home', onNaviga
   };
 
   const navigationItems = [
-    { page: 'home', label: 'Home' },
-    { page: 'about', label: 'Sobre' },
-    { page: 'projects', label: 'Projetos' },
-    { page: 'contact', label: 'Contato' }
+    { page: "home", label: "Home" },
+    { page: "about", label: "Sobre" },
+    { page: "projects", label: "Projetos" },
+    { page: "contact", label: "Contato" },
   ];
 
-  const isTranslucent = variant === 'translucent' && !scrolled;
+  const isTranslucent = variant === "translucent" && !scrolled;
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        isTranslucent 
-          ? 'bg-background/80 backdrop-blur-md border-transparent' 
-          : 'bg-background border-border'
-      } border-b`}
-    >
+        isTranslucent
+          ? "bg-background/80 backdrop-blur-md border-transparent"
+          : "bg-background border-border"
+      } border-b`}>
       <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
         <nav className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <button 
-            onClick={() => handleNavigation('home')}
-            className="text-xl lg:text-2xl font-semibold tracking-tight text-foreground hover:text-accent transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-            aria-label="Ir para home"
-          >
+          <button
+            onClick={() => handleNavigation("home")}
+            className="text-xl lg:text-2xl font-semibold tracking-tight text-foreground hover:text-accent transition-all duration-300 hover:scale-105"
+            aria-label="Ir para home">
             Matheus.
           </button>
 
@@ -61,13 +59,16 @@ export function Header({ variant = 'translucent', currentPage = 'home', onNaviga
               <button
                 key={item.page}
                 onClick={() => handleNavigation(item.page)}
-                className={`text-sm transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-sm px-2 py-1 ${
-                  currentPage === item.page 
-                    ? 'text-accent' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
+                className={`text-sm transition-all duration-300 rounded-sm px-3 py-2 relative group ${
+                  currentPage === item.page
+                    ? "text-accent bg-accent/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/5"
+                }`}>
                 {item.label}
+                {currentPage === item.page && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full" />
+                )}
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent rounded-full transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
           </div>
@@ -75,20 +76,18 @@ export function Header({ variant = 'translucent', currentPage = 'home', onNaviga
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 text-foreground hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-sm"
-            aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
-            aria-expanded={isOpen}
-          >
+            className="lg:hidden p-2 text-foreground hover:text-accent transition-all duration-300 hover:scale-110 rounded-sm"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isOpen}>
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:block">
-            <Button 
-              onClick={() => handleNavigation('contact')}
+            <Button
+              onClick={() => handleNavigation("contact")}
               size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground"
-            >
+              className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Fale comigo
             </Button>
           </div>
@@ -102,20 +101,18 @@ export function Header({ variant = 'translucent', currentPage = 'home', onNaviga
                 <button
                   key={item.page}
                   onClick={() => handleNavigation(item.page)}
-                  className={`block w-full text-left transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-sm px-2 py-2 ${
-                    currentPage === item.page 
-                      ? 'text-accent' 
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
+                  className={`block w-full text-left transition-all duration-300 rounded-sm px-3 py-2 hover:translate-x-2 ${
+                    currentPage === item.page
+                      ? "text-accent bg-accent/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/5"
+                  }`}>
                   {item.label}
                 </button>
               ))}
               <div className="pt-4">
-                <Button 
-                  onClick={() => handleNavigation('contact')}
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                >
+                <Button
+                  onClick={() => handleNavigation("contact")}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                   Fale comigo
                 </Button>
               </div>
