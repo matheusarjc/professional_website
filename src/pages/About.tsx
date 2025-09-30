@@ -11,9 +11,16 @@ import {
   Users,
   Rocket,
   ChevronDown,
+  ArrowRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import professionalImage from "figma:asset/4bc528308be412047376ac29fba78acc18182ad8.png";
+import animaLogoSvg from "../assets/logo-anima.svg";
+import fiapSvg from "../assets/fiap.svg";
+import rocketseatSvg from "../assets/rocketseat.svg";
+import aluraSvg from "../assets/alura.svg";
+import infinitySvg from "../assets/IN.svg";
+import adobeSvg from "../assets/adobe.svg";
+import ancordSvg from "../assets/ancord.svg";
 
 interface AboutProps {
   onNavigate: (page: string) => void;
@@ -351,6 +358,7 @@ export function About({ onNavigate }: AboutProps) {
                     "Redis",
                     "Elasticsearch",
                     "POO & TDD",
+                    "Python",
                   ].map((skill) => (
                     <li
                       key={skill}
@@ -471,77 +479,401 @@ export function About({ onNavigate }: AboutProps) {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </section>
 
-          {/* Ver Mais Button */}
-          <div className="flex justify-center mt-12">
+      {/* Education & Certifications */}
+      {/* Professional Journey */}
+      <section className="py-16 lg:py-24 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Floating Geometric Shapes */}
+          <motion.div
+            className="absolute w-40 h-40 border border-accent/10 rounded-full opacity-20"
+            style={{ top: "10%", left: "5%" }}
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+
+          <motion.div
+            className="absolute w-32 h-32 bg-gradient-to-br from-primary/5 to-accent/5 rounded-lg"
+            style={{ top: "60%", right: "8%", rotate: "45deg" }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [45, 225, 45],
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          {/* Moving Light Particles */}
+          {Array.from({ length: 8 }).map((_, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-border hover:border-accent/20 hover:text-accent group relative overflow-hidden">
+              key={i}
+              className="absolute w-2 h-2 bg-accent/30 rounded-full"
+              style={{
+                top: `${20 + i * 10}%`,
+                left: `${10 + i * 12}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + i * 0.5,
+                repeat: Infinity,
+                delay: i * 0.3,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+
+          {/* Flowing Lines */}
+          <motion.div
+            className="absolute h-0.5 bg-gradient-to-r from-transparent via-accent/20 to-transparent"
+            style={{ top: "30%", left: "15%", width: "200px" }}
+            animate={{
+              opacity: [0.2, 0.8, 0.2],
+              scaleX: [0.8, 1.2, 0.8],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <motion.div
+            className="absolute h-0.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+            style={{ top: "70%", right: "20%", width: "150px" }}
+            animate={{
+              opacity: [0.1, 0.6, 0.1],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+
+          {/* Glassmorphism Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5"
+            animate={{
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 lg:px-6 max-w-7xl relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left Column - Professional Story */}
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}>
+              <motion.div
+                className="bg-card/30 backdrop-blur-md rounded-2xl p-8 border border-accent/20 relative overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{
+                  scale: 1.02,
+                  borderColor: "rgba(129, 216, 208, 0.4)",
+                }}>
+                {/* Glassmorphism Glow Effect */}
                 <motion.div
-                  className="absolute inset-0 bg-accent/10"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 rounded-2xl"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 />
-                <span className="relative z-10 flex items-center gap-2">
-                  <motion.span
-                    animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="cursor-pointer">
-                    Ver mais
-                  </motion.span>
+
+                {/* Animated Border Glow */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl bg-gradient-to-r from-accent/20 via-primary/20 to-accent/20"
+                  animate={{
+                    opacity: [0, 0.5, 0],
+                    scale: [1, 1.02, 1],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ padding: "1px" }}>
+                  <div className="w-full h-full bg-card/30 backdrop-blur-md rounded-2xl" />
+                </motion.div>
+                <div className="relative z-10">
+                  <h2 className="text-2xl lg:text-3xl font-bold mb-6 text-foreground">
+                    Minha Trajetória
+                  </h2>
+
+                  <div className="space-y-4 text-muted-foreground leading-relaxed">
+                    <p>
+                      <strong className="text-foreground">Desenvolvimento Full-Stack</strong>{" "}
+                      aplicado à construção de produtos digitais com impacto real. Minha trajetória
+                      une engenharia de software e visão de negócios, sempre com foco em soluções
+                      escaláveis e de alto desempenho.
+                    </p>
+
+                    <p>
+                      Ao longo da jornada, alinhei{" "}
+                      <strong className="text-foreground">profundidade técnica</strong> com{" "}
+                      <strong className="text-foreground">estratégia de produto</strong>, atuando em
+                      projetos que vão de plataformas educacionais e fintechs digitais a soluções de
+                      e-commerce. Mais do que código, entrego contextos completos: arquitetura
+                      sólida, experiência do usuário clara e objetivos de negócio atingidos.
+                    </p>
+
+                    <p>
+                      Hoje, opero no ponto de encontro entre{" "}
+                      <strong className="text-foreground">tecnologia</strong> e{" "}
+                      <strong className="text-foreground">crescimento de negócios</strong>,
+                      desenvolvendo produtos que unem eficiência técnica e clareza estratégica. Para
+                      mim, a boa tecnologia deve ser invisível: acessível, confiável e capaz de
+                      sustentar grandes ambições.
+                    </p>
+                  </div>
+
                   <motion.div
-                    animate={{ y: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}>
-                    <ChevronDown className="w-4 h-4" />
+                    className="mt-8"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button
+                        onClick={() => {
+                          const link = document.createElement("a");
+                          link.href = "/cv-matheus-araujo.pdf";
+                          link.download = "CV-Matheus-Araujo.pdf";
+                          link.click();
+                        }}
+                        variant="ghost"
+                        className="text-accent hover:text-accent/80 p-0 h-auto font-medium group relative overflow-hidden">
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-accent/10 to-primary/10"
+                          initial={{ x: "-100%" }}
+                          whileHover={{ x: "100%" }}
+                          transition={{ duration: 0.6 }}
+                        />
+                        <span className="relative z-10">Download CV completo</span>
+                        <motion.div
+                          className="ml-2 relative z-10"
+                          animate={{ x: [0, 4, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}>
+                          <ArrowRight className="w-4 h-4" />
+                        </motion.div>
+                      </Button>
+                    </motion.div>
                   </motion.div>
-                </span>
-              </Button>
+                </div>
+              </motion.div>
+
+              {/* Education Logos */}
+              <motion.div
+                className="mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}>
+                <motion.div
+                  className="bg-card/20 backdrop-blur-md rounded-xl p-4 border border-accent/20 relative overflow-hidden"
+                  whileHover={{
+                    scale: 1.02,
+                    borderColor: "rgba(129, 216, 208, 0.3)",
+                  }}>
+                  {/* Glassmorphism Glow */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 rounded-xl"
+                    animate={{
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <div className="relative z-10">
+                    <h4 className="text-sm font-medium text-muted-foreground mb-4 text-center">
+                      Formação & Certificações
+                    </h4>
+                    <div className="flex flex-wrap justify-center items-center gap-4">
+                      {[
+                        { name: "Anima", image: animaLogoSvg },
+                        { name: "FIAP", image: fiapSvg },
+                        { name: "Rocketseat", image: rocketseatSvg },
+                        { name: "Alura", image: aluraSvg },
+                        { name: "Infinity School", image: infinitySvg },
+                        { name: "Adobe", image: adobeSvg },
+                        { name: "Ancord", image: ancordSvg },
+                      ].map((institution, index) => (
+                        <motion.div
+                          key={institution.name}
+                          className="flex items-center justify-center w-16 h-16 rounded-lg bg-muted/20 border border-border/30 hover:border-accent/30 transition-colors"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
+                          viewport={{ once: true }}
+                          whileHover={{ scale: 1.05 }}>
+                          <img
+                            src={institution.image}
+                            alt={institution.name}
+                            className="w-12 h-12 object-contain"
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - Professional Timeline */}
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}>
+              <h3 className="text-2xl lg:text-3xl font-bold mb-8 text-foreground">
+                Experiência Profissional
+              </h3>
+
+              <div className="space-y-6">
+                {[
+                  {
+                    year: "2024–Presente",
+                    role: "Founder & CEO",
+                    company: "Skoolab",
+                    description:
+                      "Fundador do ecossistema de aprendizagem com abordagem de neurobusiness e gamificação. Estruturo produto B2C, estratégia e execução técnica.",
+                    tags: ["EdTech", "Product Strategy", "Gamificação", "B2C"],
+                  },
+                  {
+                    year: "2023–Presente",
+                    role: "Engenheiro de Software Freelancer & Desenvolvedor de Negócios",
+                    company: "Autônomo (Remoto)",
+                    description:
+                      "Soluções full-stack (React/Next.js + Node.js) alinhadas a objetivos de negócio. Migração para microsserviços, dashboards analíticos e definição de MVPs/roadmaps.",
+                    tags: [
+                      "React/Next.js",
+                      "Node.js",
+                      "MVP/Discovery",
+                      "Microsserviços",
+                      "Dashboards",
+                    ],
+                  },
+                  {
+                    year: "2023–2024",
+                    role: "Order Taker & Host",
+                    company: "Camelback Resort (EUA)",
+                    description:
+                      "Atendimento ao cliente trilíngue em ambiente de alta demanda, fortalecendo comunicação e CX.",
+                    tags: ["Customer Experience", "Inglês/Espanhol", "Operações"],
+                  },
+                  {
+                    year: "2022–2023",
+                    role: "Desenvolvedor Web",
+                    company: "Turbo Partners",
+                    description:
+                      "Desenvolvimento de aplicações com React, Node.js e Shopify/Liquid. Integrações REST, documentação de fluxos e sprints ágeis com Git/GitHub.",
+                    tags: ["React", "Node.js", "Shopify/Liquid", "REST APIs", "Agile"],
+                  },
+                  {
+                    year: "2022",
+                    role: "Assessor Financeiro",
+                    company: "Amur Capital",
+                    description:
+                      "Análise de carteiras e automação de relatórios (Python + Google Sheets API). Avaliação de risco e atuação comercial high-ticket.",
+                    tags: ["Python", "Google Sheets API", "Risco", "Relatórios", "High-ticket"],
+                  },
+                  {
+                    year: "2020–2022",
+                    role: "Auxiliar Financeiro",
+                    company: "Arremate Confecções",
+                    description:
+                      "Gestão financeira e otimização de processos, com redução de custos operacionais em 15% via renegociação e controles.",
+                    tags: ["FP&A", "Processos", "Custos −15%", "Negociação"],
+                  },
+                ].map((experience, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-card/30 backdrop-blur-md rounded-xl p-6 border border-accent/20 relative overflow-hidden"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                      scale: 1.02,
+                      y: -2,
+                      borderColor: "rgba(129, 216, 208, 0.4)",
+                    }}>
+                    {/* Glassmorphism Glow Effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 rounded-xl"
+                      animate={{
+                        opacity: [0.2, 0.4, 0.2],
+                      }}
+                      transition={{
+                        duration: 3 + index * 0.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: index * 0.2,
+                      }}
+                    />
+
+                    {/* Animated Border Glow */}
+                    <motion.div
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10"
+                      animate={{
+                        opacity: [0, 0.3, 0],
+                        scale: [1, 1.01, 1],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: index * 0.3,
+                      }}
+                      style={{ padding: "1px" }}>
+                      <div className="w-full h-full bg-card/30 backdrop-blur-md rounded-xl" />
+                    </motion.div>
+                    <div className="relative z-10">
+                      <div className="flex items-start justify-between mb-3">
+                        <Badge variant="outline" className="border-accent/30 text-accent text-xs">
+                          {experience.year} • {experience.role}
+                        </Badge>
+                      </div>
+
+                      <h4 className="text-xl font-bold mb-2 text-foreground">
+                        {experience.company}
+                      </h4>
+
+                      <p className="text-muted-foreground mb-4 leading-relaxed">
+                        {experience.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {experience.tags.map((tag, tagIndex) => (
+                          <motion.span
+                            key={tagIndex}
+                            className="px-3 py-1 bg-muted/50 text-muted-foreground text-xs rounded-full border border-border/30"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: index * 0.1 + tagIndex * 0.05 }}
+                            viewport={{ once: true }}>
+                            {tag}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Education & Certifications */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl mb-6">Formações & Certificações</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Base acadêmica sólida combinada com certificações práticas nas tecnologias e
-              metodologias mais relevantes do mercado.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {formations.map((formation, index) => (
-              <Card
-                key={index}
-                className="bg-card border-border hover:border-accent/20 transition-colors">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <Badge variant="outline" className="border-accent/20 text-accent">
-                      {formation.type}
-                    </Badge>
-                    <span className="text-sm text-muted-foreground">{formation.period}</span>
-                  </div>
-
-                  <h3 className="text-lg mb-2">{formation.title}</h3>
-                  <p className="text-muted-foreground">{formation.institution}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Approach Section */}
-      <section className="py-20 lg:py-32 bg-card/30">
+      <section className="py-16 lg:py-24 bg-card/30">
         <div className="container mx-auto px-4 lg:px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl mb-6">Metodologia de Trabalho</h2>
@@ -555,30 +887,29 @@ export function About({ onNavigate }: AboutProps) {
             {[
               {
                 step: "01",
-                title: "Discovery & Análise",
+                title: "Descoberta Estratégica",
                 description:
-                  "Auditoria técnica, análise de métricas e mapeamento de oportunidades de otimização.",
+                  "Mapeamos dores e oportunidades com auditoria técnica e métricas reais para revelar onde está o maior ROI.",
                 icon: <Target className="w-6 h-6" />,
               },
               {
                 step: "02",
-                title: "Estratégia & Roadmap",
+                title: "Direção de Produto",
                 description:
-                  "Priorização baseada em impacto vs esforço, definição de KPIs e arquitetura técnica.",
+                  "Definição de KPIs e priorização de impacto vs esforço, criando um roadmap claro que guia tecnologia e negócio.",
                 icon: <BarChart3 className="w-6 h-6" />,
               },
               {
                 step: "03",
-                title: "Desenvolvimento Ágil",
-                description:
-                  "Implementação incremental com testes automatizados e deploy contínuo.",
+                title: "Construção Iterativa",
+                description: "Implementação incremental, testes automatizados e deploy contínuo.",
                 icon: <Code2 className="w-6 h-6" />,
               },
               {
                 step: "04",
-                title: "Otimização Contínua",
+                title: "Escala Inteligente",
                 description:
-                  "Monitoramento de performance, A/B testing e iteração baseada em dados reais.",
+                  "Monitoramento de performance, A/B testing e melhorias constantes para sustentar crescimento previsível.",
                 icon: <Zap className="w-6 h-6" />,
               },
             ].map((item, index) => (
@@ -600,40 +931,158 @@ export function About({ onNavigate }: AboutProps) {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 lg:px-6 max-w-4xl text-center">
-          <h2 className="text-3xl lg:text-4xl mb-6">
-            Pronto para <span className="text-accent">colaborar</span>
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+      <section className="py-16 lg:py-24 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Floating Orbs */}
+          <motion.div
+            className="absolute w-32 h-32 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-xl"
+            style={{ top: "20%", left: "10%" }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.6, 0.3],
+              x: [0, 30, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <motion.div
+            className="absolute w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-lg"
+            style={{ top: "60%", right: "15%" }}
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.5, 0.2],
+              x: [0, -25, 0],
+              y: [0, 15, 0],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+
+          {/* Moving Light Particles */}
+          {Array.from({ length: 12 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-accent/40 rounded-full"
+              style={{
+                top: `${15 + i * 7}%`,
+                left: `${5 + i * 8}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.2, 1, 0.2],
+                scale: [1, 2, 1],
+              }}
+              transition={{
+                duration: 4 + i * 0.3,
+                repeat: Infinity,
+                delay: i * 0.2,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+
+          {/* Flowing Lines */}
+          <motion.div
+            className="absolute h-0.5 bg-gradient-to-r from-transparent via-accent/30 to-transparent"
+            style={{ top: "40%", left: "20%", width: "300px" }}
+            animate={{
+              opacity: [0.3, 1, 0.3],
+              scaleX: [0.5, 1.5, 0.5],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <motion.div
+            className="absolute h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+            style={{ top: "70%", right: "25%", width: "250px" }}
+            animate={{
+              opacity: [0.2, 0.8, 0.2],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          />
+
+          {/* Glassmorphism Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5"
+            animate={{
+              opacity: [0.2, 0.4, 0.2],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 lg:px-6 max-w-4xl text-center relative z-10">
+          <motion.h2
+            className="text-3xl lg:text-4xl mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}>
+            Pronto para{" "}
+            <motion.span
+              className="text-accent font-bold"
+              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}>
+              colaborar
+            </motion.span>
+          </motion.h2>
+
+          <motion.p
+            className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}>
             Vamos discutir como posso contribuir com seu produto, seja no desenvolvimento técnico,
             estratégia de crescimento ou otimização de performance.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => {
-                // Create a mock CV download
-                const link = document.createElement("a");
-                link.href = "#"; // Replace with actual CV URL
-                link.download = "Matheus_Araujo_CV.pdf";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
-              variant="outline"
-              size="lg"
-              className="border-border hover:border-accent/20 hover:text-accent">
-              <Download className="w-4 h-4 mr-2" />
-              Download CV
-            </Button>
-            <Button
-              onClick={() => onNavigate("contact")}
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Fale comigo
-            </Button>
-          </div>
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={() => {
+                  // Create a mock CV download
+                  const link = document.createElement("a");
+                  link.href = "#"; // Replace with actual CV URL
+                  link.download = "Matheus_Araujo_CV.pdf";
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                variant="outline"
+                size="lg"
+                className="border-accent/30 hover:border-accent/50 hover:text-accent bg-card/20 backdrop-blur-sm relative overflow-hidden group">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-accent/10 to-primary/10"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
+                <Download className="w-4 h-4 mr-2 relative z-10" />
+                <span className="relative z-10">Download CV</span>
+              </Button>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={() => onNavigate("contact")}
+                size="lg"
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground relative overflow-hidden group">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/20"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
+                <span className="relative z-10">Fale comigo</span>
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </motion.div>

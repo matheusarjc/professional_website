@@ -1,6 +1,7 @@
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
+import techBackground from "../assets/backgroundtrust.png";
 import {
   ArrowRight,
   Code2,
@@ -10,12 +11,160 @@ import {
   Github,
   Target,
   Download,
+  Play,
+  Pause,
+  Rocket,
 } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
+import { useState, useEffect } from "react";
 import professionalImage from "figma:asset/4bc528308be412047376ac29fba78acc18182ad8.png";
+import { ReactIcon } from "../assets/ReactIcon";
+import { NextIcon } from "../assets/NextIcon";
+import { NestIcon } from "../assets/NestIcon";
+import { FirebaseIcon } from "../assets/FirebaseIcon";
+import { PythonIcon } from "../assets/PythonIcon";
+import { FigmaIcon } from "../assets/FigmaIcon";
+import { TypeScriptIcon } from "../assets/TypeScriptIcon";
+import { N8NIcon } from "../assets/N8NIcon";
+import { ExpoIcon } from "../assets/ExpoIcon";
+import { NodeIcon } from "../assets/NodeIcon";
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+}
+
+// Tech Stack Carousel Component
+function TechStackCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const techItems = [
+    {
+      icon: ReactIcon,
+      name: "React.js",
+      description: "Biblioteca JavaScript para interfaces de usuário",
+    },
+    {
+      icon: NextIcon,
+      name: "Next.js",
+      description: "Framework React para produção",
+    },
+    {
+      icon: NestIcon,
+      name: "Nest.js",
+      description: "Framework Node.js para aplicações escaláveis",
+    },
+    {
+      icon: NodeIcon,
+      name: "Node.js",
+      description: "Runtime JavaScript para backend",
+    },
+    {
+      icon: FirebaseIcon,
+      name: "Firebase",
+      description: "Plataforma de desenvolvimento de aplicativos",
+    },
+    {
+      icon: PythonIcon,
+      name: "Python",
+      description: "Linguagem de programação versátil",
+    },
+    {
+      icon: FigmaIcon,
+      name: "Figma",
+      description: "Ferramenta de design colaborativo",
+    },
+    {
+      icon: TypeScriptIcon,
+      name: "TypeScript",
+      description: "JavaScript com tipagem estática",
+    },
+    {
+      icon: N8NIcon,
+      name: "N8N",
+      description: "Plataforma de automação de workflows",
+    },
+    {
+      icon: ExpoIcon,
+      name: "Expo",
+      description: "Plataforma para desenvolvimento React Native",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % techItems.length);
+    }, 1300);
+
+    return () => clearInterval(interval);
+  }, [techItems.length]);
+
+  return (
+    <div className="relative">
+      <div className="flex justify-center items-center gap-6 flex-wrap">
+        {techItems.map((item, index) => {
+          const IconComponent = item.icon;
+          const isActive = index === activeIndex;
+          const isPrevious = index === (activeIndex - 1 + techItems.length) % techItems.length;
+          const isNext = index === (activeIndex + 1) % techItems.length;
+
+          return (
+            <motion.div
+              key={item.name}
+              className="relative group cursor-pointer"
+              animate={{
+                opacity: isActive ? 1 : isPrevious || isNext ? 0.4 : 0.2,
+                scale: isActive ? 1.1 : 1,
+              }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              whileHover={{ scale: 1.15, opacity: 1 }}
+              title={item.description}>
+              <motion.div
+                className="p-3 rounded-xl bg-card/30 border border-border/30 backdrop-blur-sm"
+                animate={{
+                  rotate: isActive ? 360 : 0,
+                }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}>
+                <IconComponent className="w-8 h-8" />
+              </motion.div>
+
+              {/* Tooltip */}
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
+                {item.name}
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-foreground"></div>
+              </div>
+
+              {/* Glow effect for active item */}
+              {isActive && (
+                <motion.div
+                  className="absolute inset-0 rounded-xl bg-accent/20 blur-sm -z-10"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 0.6, scale: 1.2 }}
+                  transition={{ duration: 0.5 }}
+                />
+              )}
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Progress indicator */}
+      <div className="flex justify-center mt-6 gap-2">
+        {techItems.map((_, index) => (
+          <motion.div
+            key={index}
+            className={`h-1 rounded-full transition-all duration-300 ${
+              index === activeIndex ? "bg-accent" : "bg-muted"
+            }`}
+            animate={{
+              width: index === activeIndex ? 32 : 8,
+              opacity: index === activeIndex ? 1 : 0.4,
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function Home({ onNavigate }: HomeProps) {
@@ -27,6 +176,9 @@ export function Home({ onNavigate }: HomeProps) {
       impact: "+40% conversão",
       type: "case",
       id: "fintech-dashboard",
+      status: "Live",
+      statusColor: "bg-green-500",
+      statusText: "text-green-400",
     },
     {
       title: "Healthcare Platform",
@@ -35,6 +187,9 @@ export function Home({ onNavigate }: HomeProps) {
       impact: "10k+ usuários",
       type: "case",
       id: "healthcare-platform",
+      status: "Pausado",
+      statusColor: "bg-yellow-500",
+      statusText: "text-yellow-400",
     },
     {
       title: "E-commerce Optimization",
@@ -43,6 +198,9 @@ export function Home({ onNavigate }: HomeProps) {
       impact: "-35% abandono",
       type: "case",
       id: "ecommerce-optimization",
+      status: "Em lançamento",
+      statusColor: "bg-blue-500",
+      statusText: "text-blue-400",
     },
   ];
 
@@ -219,8 +377,14 @@ export function Home({ onNavigate }: HomeProps) {
                   </motion.div>
                 </motion.div>
               </motion.div>
-              {/* Icons Tools */}
-              /* TODO: Add icons tools */
+              {/* Tech Stack Carousel */}
+              <motion.div
+                className="mt-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}>
+                <TechStackCarousel />
+              </motion.div>
             </motion.div>
 
             {/* Professional Image */}
@@ -270,24 +434,24 @@ export function Home({ onNavigate }: HomeProps) {
             viewport={{ once: true, amount: 0.3 }}>
             {[
               {
-                icon: Code2,
-                title: "Produtos que escalam",
+                icon: Target,
+                title: "Estratégia de Produto",
                 description:
-                  "Arquitetura técnica sólida combinada com estratégia de produto. Stack moderna, testes automatizados e performance otimizada.",
-                color: "accent",
+                  "Do discovery ao go-live: foco em roadmap claro, métricas de conversão e priorização que gera impacto. Menos features, mais resultado.",
+                color: "primary",
               },
               {
-                icon: Target,
-                title: "Acessibilidade & Web Vitals",
+                icon: Code2,
+                title: "Experiência & Acessibilidade",
                 description:
-                  "WCAG 2.1 AA como padrão, Core Web Vitals otimizados. Experiências inclusivas que convertem melhor.",
+                  "Produtos inclusivos e intuitivos (WCAG 2.1 AA). Performance otimizada em Core Web Vitals e design que reduz fricção para aumentar retenção com base neurocientífica.",
                 color: "primary",
               },
               {
                 icon: TrendingUp,
-                title: "Custo/benefício de infra",
+                title: "Infra & Eficiência Financeira",
                 description:
-                  "Infraestrutura enxuta e eficiente. Deploy automatizado, monitoramento inteligente e custos controlados.",
+                  "Arquitetura enxuta com deploy automatizado e monitoramento inteligente. Custos sob controle e escalabilidade sustentável que protege o ROI.",
                 color: "foreground",
               },
             ].map((card, index) => (
@@ -298,8 +462,53 @@ export function Home({ onNavigate }: HomeProps) {
                 whileHover="hover"
                 whileTap={{ scale: 0.98 }}
                 custom={index}>
-                <Card className="bg-card border-border text-center h-full">
-                  <CardContent className="p-8">
+                <Card
+                  className={`bg-card border-border text-center h-full relative overflow-hidden ${
+                    card.title === "Infra & Eficiência Financeira" ? "border-blue-400/30" : ""
+                  }`}>
+                  {/* Neon glow effect for Infra card */}
+                  {card.title === "Infra & Eficiência Financeira" && (
+                    <>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-cyan-400/30 to-blue-400/20 rounded-lg"
+                        animate={{
+                          opacity: [0.3, 0.8, 0.3],
+                          scale: [1, 1.02, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-cyan-500/10 rounded-lg"
+                        animate={{
+                          opacity: [0.1, 0.4, 0.1],
+                          rotate: [0, 180, 360],
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                      />
+                      <motion.div
+                        className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
+                        animate={{
+                          opacity: [0, 1, 0],
+                          x: ["-100%", "100%"],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    </>
+                  )}
+
+                  <CardContent className="p-8 relative z-10">
                     <motion.div
                       className={`p-3 bg-${
                         card.color === "accent"
@@ -307,13 +516,42 @@ export function Home({ onNavigate }: HomeProps) {
                           : card.color === "primary"
                           ? "primary/10"
                           : "card border border-border"
-                      } rounded-lg w-fit mx-auto mb-4`}
+                      } rounded-lg w-fit mx-auto mb-4 ${
+                        card.title === "Infra & Eficiência Financeira"
+                          ? "bg-blue-500/10 border-blue-400/30"
+                          : ""
+                      }`}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}>
-                      <card.icon className={`w-8 h-8 text-${card.color}`} />
+                      <motion.div
+                        className={`w-8 h-8 ${
+                          card.title === "Infra & Eficiência Financeira"
+                            ? "text-blue-400"
+                            : `text-${card.color}`
+                        }`}
+                        animate={
+                          card.title === "Infra & Eficiência Financeira"
+                            ? {
+                                filter: [
+                                  "drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))",
+                                  "drop-shadow(0 0 15px rgba(59, 130, 246, 0.8))",
+                                  "drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))",
+                                ],
+                              }
+                            : {}
+                        }
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}>
+                        <card.icon className="w-8 h-8" />
+                      </motion.div>
                     </motion.div>
                     <motion.h3
-                      className="text-xl mb-3"
+                      className={`text-xl mb-3 ${
+                        card.title === "Infra & Eficiência Financeira" ? "text-blue-400" : ""
+                      }`}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
@@ -364,6 +602,7 @@ export function Home({ onNavigate }: HomeProps) {
             </motion.p>
           </motion.div>
 
+          {/* Projects */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
             variants={containerVariants}
@@ -378,10 +617,47 @@ export function Home({ onNavigate }: HomeProps) {
                 whileHover="hover"
                 whileTap={{ scale: 0.98 }}
                 layout>
-                <Card className="bg-card border-border hover:border-accent/20 transition-colors group h-full cursor-pointer">
+                <Card className="bg-card border-border hover:border-accent/20 transition-colors group h-full cursor-pointer relative overflow-hidden">
+                  {/* Status Badge */}
+                  <motion.div
+                    className={`absolute top-4 right-4 z-10 flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
+                      project.status === "Live"
+                        ? "bg-green-500/20 text-green-400 border border-green-400/30"
+                        : project.status === "Pausado"
+                        ? "bg-yellow-500/20 text-yellow-400 border border-yellow-400/30"
+                        : "bg-blue-500/20 text-blue-400 border border-blue-400/30"
+                    }`}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    viewport={{ once: true }}>
+                    {project.status === "Live" && (
+                      <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}>
+                        <Play className="w-3 h-3" />
+                      </motion.div>
+                    )}
+                    {project.status === "Pausado" && (
+                      <motion.div
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 3, repeat: Infinity }}>
+                        <Pause className="w-3 h-3" />
+                      </motion.div>
+                    )}
+                    {project.status === "Em lançamento" && (
+                      <motion.div
+                        animate={{ y: [0, -2, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}>
+                        <Rocket className="w-3 h-3" />
+                      </motion.div>
+                    )}
+                    <span>{project.status}</span>
+                  </motion.div>
+
                   <CardContent className="p-6 h-full flex flex-col">
                     <motion.div
-                      className="aspect-video rounded-lg bg-muted/20 mb-4 flex items-center justify-center"
+                      className="aspect-video rounded-lg bg-muted/20 mb-4 flex items-center justify-center relative"
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}>
                       <motion.div
@@ -390,6 +666,29 @@ export function Home({ onNavigate }: HomeProps) {
                         transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}>
                         <Code2 className="w-8 h-8 text-accent" />
                       </motion.div>
+
+                      {/* Status indicator dot */}
+                      <motion.div
+                        className={`absolute top-2 left-2 w-3 h-3 rounded-full ${project.statusColor}`}
+                        animate={
+                          project.status === "Live"
+                            ? {
+                                opacity: [0.5, 1, 0.5],
+                                scale: [1, 1.2, 1],
+                              }
+                            : project.status === "Em lançamento"
+                            ? {
+                                opacity: [0.3, 0.8, 0.3],
+                                x: [0, 2, 0],
+                              }
+                            : {}
+                        }
+                        transition={{
+                          duration: project.status === "Live" ? 1.5 : 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
                     </motion.div>
 
                     <motion.h3
@@ -493,42 +792,175 @@ export function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* Trust Signal */}
-      <section className="py-12 lg:py-20 bg-card/30 relative overflow-hidden">
-        {/* Animated Background Elements */}
+      {/* Trust Signal - Inspirational Tech Quote */}
+      <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden flex items-center justify-center">
+        {/* Background Image with Parallax */}
         <motion.div
-          className="absolute w-64 h-64 border border-accent/10 rounded-full"
-          style={{ top: "50%", left: "20%", transform: "translate(-50%, -50%)" }}
-          animate={{
-            rotate: -360,
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            rotate: { duration: 30, repeat: Infinity, ease: "linear" },
-            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-          }}
-        />
+          className="absolute inset-0 z-0"
+          initial={{ scale: 1.1 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          viewport={{ once: true }}>
+          {/* Left side with blur */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${techBackground})`,
+              filter: "blur(8px) brightness(0.6) contrast(1.1)",
+              clipPath: "polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%)",
+            }}
+          />
 
-        <div className="container mx-auto px-4 lg:px-6 max-w-4xl text-center relative z-10">
-          <div className="max-w-2xl mx-auto">
-            <motion.p
-              className="text-lg text-muted-foreground leading-relaxed"
+          {/* Right side without blur (focus on eyes) */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${techBackground})`,
+              filter: "brightness(0.6) contrast(1.1)",
+              clipPath: "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)",
+            }}
+          />
+
+          {/* Additional overlay for better text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/10" />
+        </motion.div>
+
+        {/* Animated Tech Elements */}
+        <div className="absolute inset-0 pointer-events-none z-10">
+          {/* Eye Reflection Effects - positioned on the right side (no blur) */}
+          <motion.div
+            className="absolute w-4 h-4 bg-accent/80 rounded-full"
+            style={{ top: "35%", left: "75%" }}
+            animate={{
+              opacity: [0.6, 1, 0.6],
+              scale: [1, 1.3, 1],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute w-3 h-3 bg-accent/60 rounded-full"
+            style={{ top: "37%", left: "81%" }}
+            animate={{
+              opacity: [0.4, 0.8, 0.4],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          />
+
+          {/* Floating Tech Elements - positioned on the left side (blurred area) */}
+          <motion.div
+            className="absolute w-32 h-0.5 bg-gradient-to-r from-transparent via-accent/30 to-transparent"
+            style={{ top: "25%", left: "10%" }}
+            animate={{
+              opacity: [0.3, 0.8, 0.3],
+              scaleX: [0.8, 1.2, 0.8],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <motion.div
+            className="absolute w-24 h-24 border border-accent/20 rounded-lg"
+            style={{ bottom: "20%", right: "15%" }}
+            animate={{
+              rotate: [0, 180, 360],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          />
+
+          {/* Circuit-like patterns - positioned on the right side (no blur) */}
+          <motion.div
+            className="absolute w-16 h-0.5 bg-accent/40"
+            style={{ top: "60%", right: "25%" }}
+            animate={{
+              scaleX: [0, 1, 0],
+              opacity: [0, 1, 0],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+
+          {/* Additional eye highlight effect */}
+          <motion.div
+            className="absolute w-2 h-2 bg-white/60 rounded-full"
+            style={{ top: "36%", left: "76%" }}
+            animate={{
+              opacity: [0.3, 0.8, 0.3],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 lg:px-6 max-w-5xl text-center relative z-20">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto">
+            <motion.h2
+              className="text-3xl lg:text-5xl mb-8 leading-tight text-foreground font-bold"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}>
-              <motion.strong
-                className="text-foreground"
+              <motion.span
+                className="inline-block "
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+                Good technology should be
+              </motion.span>{" "}
+              <motion.span
+                className="text-green-500 inline-block text-4xl lg:text-5xl"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                viewport={{ once: true }}>
-                Finanças, educação e saúde:
-              </motion.strong>{" "}
-              setores onde precisão técnica e clareza de experiência não são opcionais. Foco em
-              conversão e performance que escala.
-            </motion.p>
-          </div>
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.15 }}>
+                good
+              </motion.span>{" "}
+              <motion.span
+                className="inline-block"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+                and <motion.span className="text-[#81D8D0] lg:text-5xl">work</motion.span> even
+              </motion.span>{" "}
+              <br className="hidden lg:block" />
+              {/* <motion.span
+                className="inline-block text-2xl lg:text-3xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}>
+                <motion.span className="text-[#81D8D0] text-3xl">work</motion.span> even
+              </motion.span>{" "} */}
+              <motion.span
+                className="text-primary text-2xl inline-block lg:text-4xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}>
+                <motion.span className="text-yellow-400">better</motion.span> for the business.
+              </motion.span>
+            </motion.h2>
+
+            {/* Subtle highlight indicator */}
+            <motion.div
+              className="w-24 h-1 bg-gradient-to-r from-accent to-primary mx-auto rounded-full"
+              initial={{ width: 0, opacity: 0 }}
+              whileInView={{ width: "96px", opacity: 1 }}
+              transition={{ duration: 1, delay: 1.6 }}
+              viewport={{ once: true }}
+            />
+          </motion.div>
         </div>
+
+        {/* Bottom fade to next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-15" />
       </section>
 
       {/* About Preview */}
@@ -556,7 +988,7 @@ export function Home({ onNavigate }: HomeProps) {
                 whileInView="visible"
                 viewport={{ once: true }}>
                 <motion.p variants={itemVariants}>
-                  <strong className="text-foreground">Clareza acima de complexidade.</strong>
+                  <strong className="text-foreground">Clareza acima de complexidade.</strong>{" "}
                   Produtos excepcionais nascem da intersecção entre código limpo, dados precisos e
                   experiências acessíveis.
                 </motion.p>
@@ -603,7 +1035,7 @@ export function Home({ onNavigate }: HomeProps) {
                 viewport={{ once: true, amount: 0.3 }}>
                 {[
                   { value: "5+", label: "Anos de experiência" },
-                  { value: "50+", label: "Projetos entregues" },
+                  { value: "7", label: "Projetos end-to-end entregues" },
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
@@ -711,7 +1143,7 @@ export function Home({ onNavigate }: HomeProps) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}>
-              Pronto para <span className="text-accent">colaborar</span>
+              Pronto para <span className="text-accent font-bold">colaborar</span>
             </motion.h2>
             <motion.p
               className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto"
