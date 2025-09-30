@@ -148,23 +148,59 @@ export function Contact({ onNavigate }: ContactProps) {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      // Preparar dados do email
+      const emailData = {
+        to_email: import.meta.env.VITE_TO_EMAIL || "carvalhom630@gmail.com",
+        from_name: formData.name,
+        from_email: formData.email,
+        reason: getReasonTitle(formData.reason!),
+        objective: formData.objective,
+        context: formData.context || "Não informado",
+        reference: formData.reference || "Não informado",
+        linkedin: formData.linkedin || "Não informado",
+        reply_to: formData.email,
+      };
 
-    toast.success("Mensagem enviada com sucesso! Respondo em até 24h.");
+      // Enviar email via EmailJS
+      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+          template_params: emailData,
+        }),
+      });
 
-    // Reset form
-    setFormData({
-      reason: null,
-      objective: "",
-      context: "",
-      reference: "",
-      name: "",
-      email: "",
-      linkedin: "",
-    });
-    setCurrentStep(1);
-    setIsSubmitting(false);
+      if (response.ok) {
+        toast.success("Mensagem enviada com sucesso! Respondo em até 24h.");
+
+        // Reset form
+        setFormData({
+          reason: null,
+          objective: "",
+          context: "",
+          reference: "",
+          name: "",
+          email: "",
+          linkedin: "",
+        });
+        setCurrentStep(1);
+      } else {
+        throw new Error("Erro ao enviar email");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar email:", error);
+      toast.error(
+        "Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente pelo email."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getReasonTitle = (reason: ContactReason) => {
@@ -176,7 +212,7 @@ export function Contact({ onNavigate }: ContactProps) {
 
   return (
     <motion.div
-      className="min-h-screen bg-background pt-20"
+      className="min-h-screen bg-background py-20"
       initial="hidden"
       animate="visible"
       variants={containerVariants}>

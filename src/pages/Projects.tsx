@@ -19,6 +19,10 @@ import {
   Users,
   Zap,
   Target,
+  Loader2,
+  Wrench,
+  Rocket,
+  Hammer,
 } from "lucide-react";
 
 interface ProjectsProps {
@@ -26,7 +30,7 @@ interface ProjectsProps {
 }
 
 const projectsData = {
-  cases: [
+  projects: [
     {
       title: "Fintech Dashboard",
       category: "Fintech",
@@ -42,6 +46,8 @@ const projectsData = {
       ],
       segment: "Fintech",
       status: "Live",
+      siteUrl: "https://fintech-dashboard-demo.vercel.app",
+      githubUrl: "https://github.com/matheus/fintech-dashboard",
     },
     {
       title: "Healthcare Platform",
@@ -57,7 +63,9 @@ const projectsData = {
         { metric: "Load Time", value: "2.1s", icon: <Zap className="w-4 h-4" /> },
       ],
       segment: "Healthtech",
-      status: "Live",
+      status: "Pausado",
+      siteUrl: null,
+      githubUrl: "https://github.com/matheus/healthcare-platform",
     },
     {
       title: "E-commerce Optimization",
@@ -74,52 +82,90 @@ const projectsData = {
       ],
       segment: "E-commerce",
       status: "Live",
+      siteUrl: "https://ecommerce-optimization-demo.vercel.app",
+      githubUrl: "https://github.com/matheus/ecommerce-optimization",
     },
-  ],
-  code: [
     {
       title: "Product Analytics Dashboard",
+      category: "Analytics",
       description:
         "Dashboard interativo para análise de métricas de produto com React + Chart.js. Inclui funis de conversão, cohort analysis e A/B testing results.",
-      tech: ["React", "TypeScript", "Chart.js", "Tailwind"],
+      problem: "Falta de visibilidade em métricas de produto e performance",
+      solution: "Dashboard completo com visualizações interativas e alertas inteligentes",
+      stack: ["React", "TypeScript", "Chart.js", "Tailwind"],
+      results: [
+        { metric: "Time to Insight", value: "-70%", icon: <Zap className="w-4 h-4" /> },
+        { metric: "Data Accuracy", value: "99.8%", icon: <Target className="w-4 h-4" /> },
+        { metric: "User Satisfaction", value: "4.8/5", icon: <Star className="w-4 h-4" /> },
+      ],
+      segment: "Analytics",
+      status: "Live",
+      siteUrl: "https://product-analytics-demo.vercel.app",
       githubUrl: "https://github.com/matheus/product-analytics",
-      liveUrl: "https://product-analytics-demo.vercel.app",
-      stars: 23,
-      language: "TypeScript",
-      status: "Em desenvolvimento",
     },
     {
       title: "WCAG Accessibility Toolkit",
+      category: "Developer Tools",
       description:
         "Biblioteca de componentes React acessíveis com testes automatizados de compliance WCAG 2.1 AA.",
-      tech: ["React", "Jest", "Axe-core", "Storybook"],
+      problem: "Falta de componentes acessíveis padronizados",
+      solution: "Kit completo de componentes com testes automatizados de acessibilidade",
+      stack: ["React", "Jest", "Axe-core", "Storybook"],
+      results: [
+        { metric: "Components", value: "50+", icon: <Code2 className="w-4 h-4" /> },
+        { metric: "WCAG Score", value: "100%", icon: <Target className="w-4 h-4" /> },
+        { metric: "Downloads", value: "1.2k", icon: <TrendingUp className="w-4 h-4" /> },
+      ],
+      segment: "Developer Tools",
+      status: "Live",
+      siteUrl: "https://wcag-toolkit.netlify.app",
       githubUrl: "https://github.com/matheus/wcag-toolkit",
-      liveUrl: "https://wcag-toolkit.netlify.app",
-      stars: 31,
-      language: "JavaScript",
-      status: "Finalizado",
     },
     {
       title: "Fintech API Gateway",
+      category: "Fintech",
       description:
         "Gateway de APIs para fintechs com autenticação, rate limiting, monitoramento e compliance PCI DSS.",
-      tech: ["Node.js", "Express", "Redis", "Docker"],
-      githubUrl: "https://github.com/matheus/fintech-gateway",
-      liveUrl: null,
-      stars: 18,
-      language: "JavaScript",
+      problem: "Necessidade de gateway seguro e escalável para APIs financeiras",
+      solution: "Gateway robusto com compliance PCI DSS e monitoramento em tempo real",
+      stack: ["Node.js", "Express", "Redis", "Docker"],
+      results: [
+        { metric: "Uptime", value: "99.9%", icon: <Zap className="w-4 h-4" /> },
+        { metric: "Response Time", value: "<50ms", icon: <Target className="w-4 h-4" /> },
+        { metric: "Security Score", value: "A+", icon: <Star className="w-4 h-4" /> },
+      ],
+      segment: "Fintech",
       status: "Pausado",
+      siteUrl: null,
+      githubUrl: "https://github.com/matheus/fintech-gateway",
     },
     {
-      title: "Health Data Validator",
+      title: "Mini SaaS Platform",
+      category: "SaaS",
       description:
-        "Validador de dados médicos FHIR com criptografia end-to-end e audit logs para compliance HIPAA.",
-      tech: ["Python", "FastAPI", "PostgreSQL", "Docker"],
-      githubUrl: "https://github.com/matheus/health-validator",
-      liveUrl: null,
-      stars: 12,
-      language: "Python",
-      status: "Em desenvolvimento",
+        "Plataforma SaaS completa com autenticação, pagamentos, dashboard e analytics integrados.",
+      problem: "Falta de solução SaaS completa e escalável",
+      solution: "Plataforma end-to-end com todas as funcionalidades essenciais",
+      stack: ["Next.js", "Stripe", "PostgreSQL", "Vercel"],
+      results: [],
+      segment: "SaaS",
+      status: "Em lançamento",
+      siteUrl: null,
+      githubUrl: null,
+    },
+    {
+      title: "EdTech Learning Platform",
+      category: "EdTech",
+      description:
+        "Plataforma de aprendizado com gamificação, progress tracking e conteúdo interativo.",
+      problem: "Necessidade de plataforma educacional moderna e engajante",
+      solution: "Sistema completo de aprendizado com gamificação e analytics",
+      stack: ["React", "Node.js", "MongoDB", "WebRTC"],
+      results: [],
+      segment: "EdTech",
+      status: "Em produção",
+      siteUrl: null,
+      githubUrl: null,
     },
   ],
   content: [
@@ -207,17 +253,25 @@ const projectsData = {
 };
 
 export function Projects({ onNavigate }: ProjectsProps) {
-  const [activeTab, setActiveTab] = useState("cases");
+  const [activeTab, setActiveTab] = useState("projects");
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
 
-  const segments = ["Fintech", "Healthtech", "E-commerce", "Edtech"];
+  const segments = [
+    "Fintech",
+    "Healthtech",
+    "E-commerce",
+    "EdTech",
+    "SaaS",
+    "Analytics",
+    "Developer Tools",
+  ];
 
-  const filteredCases = selectedSegment
-    ? projectsData.cases.filter((project) => project.segment === selectedSegment)
-    : projectsData.cases;
+  const filteredProjects = selectedSegment
+    ? projectsData.projects.filter((project) => project.segment === selectedSegment)
+    : projectsData.projects;
 
-  const totalProjects =
-    projectsData.cases.length + projectsData.code.length + projectsData.content.length;
+  // Contabiliza todos os projetos do site
+  const totalProjects = projectsData.projects.length + projectsData.content.length;
 
   // Animation variants
   const containerVariants: Variants = {
@@ -317,22 +371,24 @@ export function Projects({ onNavigate }: ProjectsProps) {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}>
-              Cases &{" "}
+              De código ao{" "}
               <motion.span
                 className="text-accent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}>
-                Projetos
+                Resultado
               </motion.span>
             </motion.h1>
             <motion.p
-              className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+              className="text-lg lg:text-xl text-muted-foreground max-w-5xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}>
-              Portfólio de projetos reais, código open source e conteúdo técnico. Desenvolvimento
-              orientado a métricas e resultados mensuráveis.
+              Portfólio de projetos reais e conteúdo técnico, orientados a métricas e resultados.
+              Futuramente, você poderá adquirir projetos completos, administrativa e
+              operacionalmente estruturados, com documentação integral: prontos para execução
+              imediata.
             </motion.p>
           </motion.div>
 
@@ -343,19 +399,28 @@ export function Projects({ onNavigate }: ProjectsProps) {
             {[
               {
                 icon: Code2,
-                value: totalProjects,
-                label: "Projetos Totais",
+                value:
+                  "De MVPs a plataformas completas, cada um documentado e pronto para escalar.",
+                label: `${totalProjects} projetos entregues`,
                 color: "accent",
                 delay: 0.6,
               },
               {
                 icon: Eye,
-                value: "50k+",
-                label: "Usuários Impactados",
+                value:
+                  "Estratégias que reduzem custos, aumentam eficiência e sustentam crescimento previsível.",
+                label: "ROI real para empresas",
                 color: "primary",
                 delay: 0.8,
               },
-              { icon: Star, value: "84", label: "GitHub Stars", color: "foreground", delay: 1.0 },
+              {
+                icon: Star,
+                value:
+                  "React, Next.js, Node.js, microsserviços e cloud infra aplicados para gerar performance e resultado.",
+                label: "Stack & Execução",
+                color: "foreground",
+                delay: 1.0,
+              },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -378,7 +443,7 @@ export function Projects({ onNavigate }: ProjectsProps) {
                       <stat.icon className={`w-8 h-8 text-${stat.color}`} />
                     </motion.div>
                     <motion.div
-                      className="text-3xl mb-2 text-accent"
+                      className="text-xl mb-2 text-accent"
                       variants={numberCounterVariants}
                       initial="initial"
                       animate="animate"
@@ -419,11 +484,10 @@ export function Projects({ onNavigate }: ProjectsProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}>
-              <TabsList className="grid w-full grid-cols-3 mb-12">
+              <TabsList className="grid w-full grid-cols-2 mb-12">
                 {[
-                  { value: "cases", label: "Cases" },
-                  { value: "code", label: "Código" },
-                  { value: "content", label: "Artigos & YouTube" },
+                  { value: "projects", label: "Projetos" },
+                  { value: "content", label: "Artigos & Vídeos" },
                 ].map((tab, index) => (
                   <motion.div
                     key={tab.value}
@@ -437,8 +501,8 @@ export function Projects({ onNavigate }: ProjectsProps) {
               </TabsList>
             </motion.div>
 
-            {/* Cases Tab */}
-            <TabsContent value="cases" className="space-y-8">
+            {/* Projects Tab */}
+            <TabsContent value="projects" className="space-y-8">
               {/* Segment Filter */}
               <motion.div
                 className="flex flex-wrap gap-2 justify-center mb-8"
@@ -489,7 +553,7 @@ export function Projects({ onNavigate }: ProjectsProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.4 }}>
-                  {filteredCases.map((project, index) => (
+                  {filteredProjects.map((project, index) => (
                     <motion.div
                       key={index}
                       variants={cardHoverVariants}
@@ -498,264 +562,267 @@ export function Projects({ onNavigate }: ProjectsProps) {
                       whileTap={{ scale: 0.98 }}
                       layout
                       layoutId={`case-${index}`}>
-                      <Card className="bg-card border-border overflow-hidden cursor-pointer">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
-                          {/* Project Info */}
-                          <div className="lg:col-span-2 p-8">
-                            <motion.div
-                              className="flex items-center gap-4 mb-4"
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.2 }}>
-                              <Badge variant="outline" className="border-accent/20 text-accent">
-                                {project.category}
-                              </Badge>
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                transition={{ delay: 0.4, type: "spring", stiffness: 200 }}>
-                                <Badge
-                                  variant="default"
-                                  className="bg-accent text-accent-foreground">
-                                  {project.status}
-                                </Badge>
-                              </motion.div>
-                            </motion.div>
-
-                            <motion.h3
-                              className="text-2xl mb-4"
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.3 }}>
-                              {project.title}
-                            </motion.h3>
-                            <motion.p
-                              className="text-muted-foreground leading-relaxed mb-6"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.4 }}>
-                              {project.description}
-                            </motion.p>
-
-                            <motion.div
-                              className="space-y-4 mb-6"
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.5 }}>
-                              <div>
-                                <h4 className="text-sm text-accent mb-2">Desafio</h4>
-                                <p className="text-sm text-muted-foreground">{project.problem}</p>
-                              </div>
-                              <div>
-                                <h4 className="text-sm text-accent mb-2">Solução</h4>
-                                <p className="text-sm text-muted-foreground">{project.solution}</p>
-                              </div>
-                            </motion.div>
-
-                            <motion.div
-                              className="flex flex-wrap gap-2 mb-6"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.6 }}>
-                              {project.stack.map((tech, techIndex) => (
-                                <motion.div
-                                  key={tech}
-                                  initial={{ opacity: 0, scale: 0 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  transition={{ delay: 0.7 + techIndex * 0.1 }}
-                                  whileHover={{ scale: 1.1 }}>
-                                  <Badge
-                                    variant="secondary"
-                                    className="bg-muted/50 text-muted-foreground border-border text-xs">
-                                    {tech}
-                                  </Badge>
-                                </motion.div>
-                              ))}
-                            </motion.div>
-                          </div>
-
-                          {/* Results */}
-                          <motion.div
-                            className="p-8 bg-muted/20 border-l border-border"
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.4 }}>
-                            <h4 className="text-lg mb-6 text-accent">Resultados</h4>
-                            <div className="space-y-4">
-                              {project.results.map((result, i) => (
-                                <motion.div
-                                  key={i}
-                                  className="flex items-center justify-between"
-                                  initial={{ opacity: 0, x: 30 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: 0.6 + i * 0.1 }}
-                                  whileHover={{ x: 5 }}>
-                                  <div className="flex items-center gap-3">
-                                    <motion.div
-                                      className="p-2 bg-accent/10 rounded-lg text-accent"
-                                      whileHover={{ rotate: 360 }}
-                                      transition={{ duration: 0.5 }}>
-                                      {result.icon}
-                                    </motion.div>
-                                    <span className="text-sm text-muted-foreground">
-                                      {result.metric}
-                                    </span>
-                                  </div>
+                      <Card className="bg-card border-border overflow-hidden cursor-pointer relative">
+                        {/* Blur overlay for Em lançamento and Em produção */}
+                        {(project.status === "Em lançamento" ||
+                          project.status === "Em produção") && (
+                          <div
+                            className={`absolute inset-0 z-20 backdrop-blur-md ${
+                              project.status === "Em lançamento"
+                                ? "bg-blue-500/20"
+                                : "bg-purple-500/30"
+                            }`}>
+                            {/* Loading animations in blur layer */}
+                            <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between p-4 md:p-8">
+                              {project.status === "Em lançamento" ? (
+                                <>
+                                  {/* Animation Section */}
                                   <motion.div
-                                    className="text-lg"
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    transition={{
-                                      delay: 0.8 + i * 0.1,
-                                      type: "spring",
-                                      stiffness: 200,
-                                    }}>
-                                    {result.value}
+                                    className="text-center mb-4 md:mb-0"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}>
+                                    <motion.div
+                                      className="mb-4"
+                                      animate={{
+                                        y: [0, -10, 0],
+                                        rotate: [0, 5, 0],
+                                      }}
+                                      transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                      }}>
+                                      <Rocket className="w-10 h-10 md:w-12 md:h-12 text-blue-400 mx-auto" />
+                                    </motion.div>
+                                    <motion.div
+                                      className="text-lg md:text-2xl font-bold text-blue-400 mb-2"
+                                      animate={{ opacity: [0.5, 1, 0.5] }}
+                                      transition={{ duration: 1, repeat: Infinity }}>
+                                      Lançamento em breve!
+                                    </motion.div>
+                                    <motion.p
+                                      className="text-blue-300 text-xs md:text-sm"
+                                      animate={{ opacity: [0.7, 1, 0.7] }}
+                                      transition={{ duration: 1.5, repeat: Infinity }}>
+                                      Lançamento em andamento...
+                                    </motion.p>
                                   </motion.div>
-                                </motion.div>
-                              ))}
+
+                                  {/* Project Info Section */}
+                                  <motion.div
+                                    className="text-center md:text-right max-w-xs w-full md:w-auto"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.3 }}>
+                                    <motion.h3
+                                      className="text-lg md:text-xl font-bold text-blue-400 mb-2"
+                                      animate={{ opacity: [0.8, 1, 0.8] }}
+                                      transition={{ duration: 2, repeat: Infinity }}>
+                                      {project.title}
+                                    </motion.h3>
+                                    <motion.p
+                                      className="text-blue-300 text-xs md:text-sm leading-relaxed hidden md:block"
+                                      animate={{ opacity: [0.7, 1, 0.7] }}
+                                      transition={{ duration: 2.5, repeat: Infinity }}>
+                                      {project.description}
+                                    </motion.p>
+                                  </motion.div>
+                                </>
+                              ) : (
+                                <>
+                                  {/* Animation Section */}
+                                  <motion.div
+                                    className="text-center mb-4 md:mb-0"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}>
+                                    <motion.div
+                                      className="mb-4"
+                                      animate={{
+                                        rotate: [0, 360],
+                                        scale: [1, 1.1, 1],
+                                      }}
+                                      transition={{
+                                        duration: 3,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                      }}>
+                                      <Hammer className="w-10 h-10 md:w-12 md:h-12 text-purple-400 mx-auto" />
+                                    </motion.div>
+                                    <motion.div
+                                      className="text-lg md:text-2xl font-bold text-purple-400 mb-2"
+                                      animate={{ opacity: [0.5, 1, 0.5] }}
+                                      transition={{ duration: 1, repeat: Infinity }}>
+                                      Em Construção
+                                    </motion.div>
+                                    <motion.p
+                                      className="text-purple-300 text-xs md:text-sm"
+                                      animate={{ opacity: [0.7, 1, 0.7] }}
+                                      transition={{ duration: 1.5, repeat: Infinity }}>
+                                      Desenvolvimento ativo...
+                                    </motion.p>
+                                  </motion.div>
+
+                                  {/* Product Area Section */}
+                                  <motion.div
+                                    className="text-center md:text-right max-w-xs w-full md:w-auto"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.3 }}>
+                                    <motion.div
+                                      className="inline-block px-3 py-2 md:px-4 md:py-2 bg-purple-500/20 rounded-lg border border-purple-400/30 mb-3"
+                                      animate={{
+                                        scale: [1, 1.05, 1],
+                                        opacity: [0.8, 1, 0.8],
+                                      }}
+                                      transition={{ duration: 2, repeat: Infinity }}>
+                                      <span className="text-purple-400 font-semibold text-xs md:text-sm">
+                                        {project.category}
+                                      </span>
+                                    </motion.div>
+                                    <motion.p
+                                      className="text-purple-300 text-xs md:text-sm leading-relaxed hidden md:block"
+                                      animate={{ opacity: [0.7, 1, 0.7] }}
+                                      transition={{ duration: 2.5, repeat: Infinity }}>
+                                      Produto em desenvolvimento na área de{" "}
+                                      {project.category.toLowerCase()}
+                                    </motion.p>
+                                  </motion.div>
+                                </>
+                              )}
                             </div>
+                          </div>
+                        )}
+
+                        <div className="p-8 relative z-10">
+                          <motion.div
+                            className="flex items-center gap-4 mb-4"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2 }}>
+                            <Badge variant="outline" className="border-accent/20 text-accent">
+                              {project.category}
+                            </Badge>
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 0.4, type: "spring", stiffness: 200 }}>
+                              <Badge
+                                variant="default"
+                                className={`${
+                                  project.status === "Live"
+                                    ? "bg-green-500 text-white"
+                                    : project.status === "Pausado"
+                                    ? "bg-yellow-500 text-white"
+                                    : project.status === "Em lançamento"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-purple-500 text-white"
+                                }`}>
+                                {project.status}
+                              </Badge>
+                            </motion.div>
                           </motion.div>
+
+                          <motion.h3
+                            className="text-2xl mb-4"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}>
+                            {project.title}
+                          </motion.h3>
+                          <motion.p
+                            className="text-muted-foreground leading-relaxed mb-6"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}>
+                            {project.description}
+                          </motion.p>
+
+                          {/* Content for Live and Pausado projects */}
+                          {project.status === "Live" || project.status === "Pausado" ? (
+                            <>
+                              <motion.div
+                                className="space-y-4 mb-6"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}>
+                                <div>
+                                  <h4 className="text-sm text-accent mb-2">Desafio</h4>
+                                  <p className="text-sm text-muted-foreground">{project.problem}</p>
+                                </div>
+                                <div>
+                                  <h4 className="text-sm text-accent mb-2">Solução</h4>
+                                  <p className="text-sm text-muted-foreground">
+                                    {project.solution}
+                                  </p>
+                                </div>
+                              </motion.div>
+
+                              <motion.div
+                                className="flex flex-wrap gap-2 mb-6"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.6 }}>
+                                {project.stack.map((tech, techIndex) => (
+                                  <motion.div
+                                    key={tech}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.7 + techIndex * 0.1 }}
+                                    whileHover={{ scale: 1.1 }}>
+                                    <Badge
+                                      variant="secondary"
+                                      className="bg-muted/50 text-muted-foreground border-border text-xs">
+                                      {tech}
+                                    </Badge>
+                                  </motion.div>
+                                ))}
+                              </motion.div>
+
+                              {/* Action Buttons */}
+                              <motion.div
+                                className="flex gap-3"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.8 }}>
+                                {project.siteUrl && (
+                                  <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="border-border hover:border-accent/20 hover:text-accent"
+                                      onClick={() => window.open(project.siteUrl, "_blank")}>
+                                      <ExternalLink className="w-4 h-4 mr-2" />
+                                      Ver Site
+                                    </Button>
+                                  </motion.div>
+                                )}
+                                {project.githubUrl && (
+                                  <motion.div
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="border-border hover:border-accent/20 hover:text-accent"
+                                      onClick={() => window.open(project.githubUrl, "_blank")}>
+                                      <Github className="w-4 h-4 mr-2" />
+                                      Código
+                                    </Button>
+                                  </motion.div>
+                                )}
+                              </motion.div>
+                            </>
+                          ) : null}
                         </div>
                       </Card>
                     </motion.div>
                   ))}
                 </motion.div>
               </AnimatePresence>
-            </TabsContent>
-
-            {/* Code Tab */}
-            <TabsContent value="code" className="space-y-6">
-              <motion.div
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible">
-                {projectsData.code.map((project, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    whileHover={{
-                      scale: 1.03,
-                      transition: { type: "spring", stiffness: 300, damping: 20 },
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    layout>
-                    <Card className="bg-card border-border hover:border-accent/20 transition-colors h-full">
-                      <CardContent className="p-6 h-full flex flex-col">
-                        <motion.div
-                          className="flex items-center justify-between mb-4"
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}>
-                          <Badge variant="outline" className="border-accent/20 text-accent">
-                            {project.language}
-                          </Badge>
-                          <motion.div
-                            className="flex items-center gap-1 text-sm text-muted-foreground"
-                            whileHover={{ scale: 1.1 }}>
-                            <motion.div
-                              animate={{ rotate: [0, 20, 0] }}
-                              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}>
-                              <Star className="w-4 h-4" />
-                            </motion.div>
-                            <motion.span
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.5 + index * 0.1 }}>
-                              {project.stars}
-                            </motion.span>
-                          </motion.div>
-                        </motion.div>
-
-                        <motion.h3
-                          className="text-xl mb-3"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.2 + index * 0.1 }}>
-                          {project.title}
-                        </motion.h3>
-                        <motion.p
-                          className="text-muted-foreground text-sm leading-relaxed mb-4 flex-grow"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.3 + index * 0.1 }}>
-                          {project.description}
-                        </motion.p>
-
-                        <motion.div
-                          className="flex flex-wrap gap-2 mb-4"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.4 + index * 0.1 }}>
-                          {project.tech.map((tech, techIndex) => (
-                            <motion.div
-                              key={tech}
-                              initial={{ opacity: 0, scale: 0 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 0.5 + index * 0.1 + techIndex * 0.05 }}
-                              whileHover={{ scale: 1.1, y: -2 }}>
-                              <Badge
-                                variant="secondary"
-                                className="bg-muted/50 text-muted-foreground text-xs">
-                                {tech}
-                              </Badge>
-                            </motion.div>
-                          ))}
-                        </motion.div>
-
-                        <motion.div
-                          className="flex gap-2"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.6 + index * 0.1 }}>
-                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-border hover:border-accent/20 hover:text-accent"
-                              onClick={() => window.open(project.githubUrl, "_blank")}>
-                              <motion.div
-                                animate={{ rotate: [0, 360] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
-                                <Github className="w-4 h-4 mr-2" />
-                              </motion.div>
-                              Código
-                            </Button>
-                          </motion.div>
-                          {project.liveUrl && (
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="border-border hover:border-accent/20 hover:text-accent"
-                                onClick={() => window.open(project.liveUrl, "_blank")}>
-                                <ExternalLink className="w-4 h-4 mr-2" />
-                                Demo
-                              </Button>
-                            </motion.div>
-                          )}
-                        </motion.div>
-
-                        <motion.div
-                          className="flex items-center justify-between mt-4 pt-4 border-t border-border"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.7 + index * 0.1 }}>
-                          <motion.div
-                            initial={{ x: -20 }}
-                            animate={{ x: 0 }}
-                            transition={{ delay: 0.8 + index * 0.1 }}>
-                            <Badge variant="secondary" className="text-xs">
-                              {project.status}
-                            </Badge>
-                          </motion.div>
-                        </motion.div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </motion.div>
             </TabsContent>
 
             {/* Content Tab */}

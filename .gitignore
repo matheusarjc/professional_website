@@ -39,3 +39,6 @@ Thumbs.db
 .turbo/
 .vercel/
 .netlify/
+
+#md
+EMAILJS_SETUP.md
