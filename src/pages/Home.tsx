@@ -169,6 +169,11 @@ function TechStackCarousel() {
 
 export function Home({ onNavigate }: HomeProps) {
   const highlightProjects = [
+    /* INFO:
+     * bg-green-500: Live
+     * bg-yellow-500: Pausado
+     * bg-blue-500: Em lançamento
+     */
     {
       title: "Fintech Dashboard",
       description: "Analytics em tempo real para métricas de conversão e performance.",
@@ -285,7 +290,7 @@ export function Home({ onNavigate }: HomeProps) {
                 initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}>
-                Full-stack Developer &{" "}
+                Software Developer &{" "}
                 <motion.span
                   className=""
                   initial={{ opacity: 0 }}
