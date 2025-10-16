@@ -21,8 +21,8 @@ export default function App() {
 
   // Register Service Worker for offline caching
   useEffect(() => {
-    // Only register Service Worker in production to avoid dev server issues (HMR/WebSocket)
-    if (import.meta.env.PROD && "serviceWorker" in navigator) {
+    const shouldEnableSW = import.meta.env.PROD && import.meta.env.VITE_ENABLE_SW === "true";
+    if (shouldEnableSW && "serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("/sw.js")
@@ -34,7 +34,7 @@ export default function App() {
           });
       });
     } else if ("serviceWorker" in navigator) {
-      // In dev, ensure no active SW interferes with module loading
+      // Ensure no active SW interferes (dev or prod without flag)
       navigator.serviceWorker.getRegistrations().then((regs) => {
         regs.forEach((r) => r.unregister());
       });
