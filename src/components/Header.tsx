@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { Menu, X } from "lucide-react";
 
 interface HeaderProps {
   variant?: "translucent" | "solid";
+  currentPage?: string;
+  onNavigate?: (page: string) => void;
 }
 
-export function Header({ variant = "translucent" }: HeaderProps) {
+export function Header({ variant = "translucent", currentPage = "home", onNavigate }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,12 +20,19 @@ export function Header({ variant = "translucent" }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const handleNavigation = (page: string) => {
+    if (onNavigate) {
+      onNavigate(page);
+      setIsOpen(false);
     }
   };
+
+  const navigationItems = [
+    { page: "home", label: "Home" },
+    { page: "about", label: "Sobre" },
+    { page: "projects", label: "Projetos" },
+    { page: "contact", label: "Contato" },
+  ];
 
   const isTranslucent = variant === "translucent" && !scrolled;
 
@@ -36,53 +47,78 @@ export function Header({ variant = "translucent" }: HeaderProps) {
         <nav className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <button
-            onClick={() => scrollToSection("inicio")}
-            className="text-xl lg:text-2xl font-semibold tracking-tight text-foreground hover:text-accent transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-            aria-label="Voltar ao início">
+            onClick={() => handleNavigation("home")}
+            className="text-xl lg:text-2xl font-semibold tracking-tight text-foreground hover:text-accent transition-all duration-300 hover:scale-105"
+            aria-label="Ir para home">
             Matheus.
           </button>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
-            {[
-              { id: "inicio", label: "Início" },
-              { id: "quem-sou", label: "Quem sou" },
-              { id: "o-que-faco", label: "O que faço" },
-              { id: "formacao", label: "Formação" },
-              { id: "projetos", label: "Projetos" },
-              { id: "artigos", label: "Artigos" },
-              { id: "contato", label: "Contato" },
-              { id: "pagamento", label: "Pagamento" },
-            ].map((item) => (
+            {navigationItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-sm px-2 py-1">
+                key={item.page}
+                onClick={() => handleNavigation(item.page)}
+                className={`text-sm transition-all duration-300 rounded-sm px-3 py-2 relative group ${
+                  currentPage === item.page
+                    ? "text-accent bg-accent/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/5"
+                }`}>
                 {item.label}
+                {currentPage === item.page && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full" />
+                )}
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent rounded-full transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
           </div>
 
-          {/* Mobile Menu Button - Simplified for this version */}
-          <div className="lg:hidden">
-            <Button
-              onClick={() => scrollToSection("contato")}
-              size="sm"
-              className="bg-primary hover:bg-primary/90 text-foreground">
-              Contato
-            </Button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 text-foreground hover:text-accent transition-all duration-300 hover:scale-110 rounded-sm"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isOpen}>
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:block">
             <Button
-              onClick={() => scrollToSection("contato")}
+              onClick={() => handleNavigation("contact")}
               size="sm"
-              className="bg-primary hover:bg-primary/90 text-foreground">
+              className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Fale comigo
             </Button>
           </div>
         </nav>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="lg:hidden py-4 border-t border-border/50">
+            <div className="space-y-4">
+              {navigationItems.map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => handleNavigation(item.page)}
+                  className={`block w-full text-left transition-all duration-300 rounded-sm px-3 py-2 hover:translate-x-2 ${
+                    currentPage === item.page
+                      ? "text-accent bg-accent/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/5"
+                  }`}>
+                  {item.label}
+                </button>
+              ))}
+              <div className="pt-4">
+                <Button
+                  onClick={() => handleNavigation("contact")}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                  Fale comigo
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );
