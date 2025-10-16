@@ -1,7 +1,9 @@
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
-import techBackground from "../assets/backgroundtrust.png";
+import { OptimizedImage } from "../components/OptimizedImage";
+// Lazy load background image
+const techBackground = "/src/assets/backgroundtrust.png";
 import {
   ArrowRight,
   Code2,
@@ -16,8 +18,21 @@ import {
   Rocket,
 } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import professionalImage from "figma:asset/4bc528308be412047376ac29fba78acc18182ad8.png";
+
+// Custom hook for lazy loading images
+const useLazyImage = (src: string) => {
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageSrc(src);
+    img.src = src;
+  }, [src]);
+
+  return imageSrc;
+};
 import { ReactIcon } from "../assets/ReactIcon";
 import { NextIcon } from "../assets/NextIcon";
 import { NestIcon } from "../assets/NestIcon";
@@ -168,84 +183,107 @@ function TechStackCarousel() {
 }
 
 export function Home({ onNavigate }: HomeProps) {
-  const highlightProjects = [
-    /* INFO:
-     * bg-green-500: Live
-     * bg-yellow-500: Pausado
-     * bg-blue-500: Em lançamento
-     */
-    {
-      title: "Fintech Dashboard",
-      description: "Analytics em tempo real para métricas de conversão e performance.",
-      stack: ["React", "Node.js", "PostgreSQL"],
-      impact: "+40% conversão",
-      type: "case",
-      id: "fintech-dashboard",
-      status: "Live",
-      statusColor: "bg-green-500",
-      statusText: "text-green-400",
-    },
-    {
-      title: "Healthcare Platform",
-      description: "Sistema acessível WCAG AA para gestão de pacientes e telemedicina.",
-      stack: ["Next.js", "TypeScript", "MongoDB"],
-      impact: "10k+ usuários",
-      type: "case",
-      id: "healthcare-platform",
-      status: "Pausado",
-      statusColor: "bg-yellow-500",
-      statusText: "text-yellow-400",
-    },
-    {
-      title: "E-commerce Optimization",
-      description: "Refatoração de checkout com foco em Web Vitals e acessibilidade.",
-      stack: ["React", "AWS", "Cypress"],
-      impact: "-35% abandono",
-      type: "case",
-      id: "ecommerce-optimization",
-      status: "Em lançamento",
-      statusColor: "bg-blue-500",
-      statusText: "text-blue-400",
-    },
-  ];
+  const backgroundImage = useLazyImage(techBackground);
 
-  // Animation variants
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
+  // Memoize heavy computations
+  const highlightProjects = useMemo(
+    () => [
+      /* INFO:
+       * bg-green-500: Live
+       * bg-yellow-500: Pausado
+       * bg-blue-500: Em lançamento
+       */
+      {
+        title: "Fintech Dashboard",
+        description: "Analytics em tempo real para métricas de conversão e performance.",
+        stack: ["React", "Node.js", "PostgreSQL"],
+        impact: "+40% conversão",
+        type: "case",
+        id: "fintech-dashboard",
+        status: "Live",
+        statusColor: "bg-green-500",
+        statusText: "text-green-400",
       },
-    },
-  };
+      {
+        title: "Healthcare Platform",
+        description: "Sistema acessível WCAG AA para gestão de pacientes e telemedicina.",
+        stack: ["Next.js", "TypeScript", "MongoDB"],
+        impact: "10k+ usuários",
+        type: "case",
+        id: "healthcare-platform",
+        status: "Pausado",
+        statusColor: "bg-yellow-500",
+        statusText: "text-yellow-400",
+      },
+      {
+        title: "E-commerce Optimization",
+        description: "Refatoração de checkout com foco em Web Vitals e acessibilidade.",
+        stack: ["React", "AWS", "Cypress"],
+        impact: "-35% abandono",
+        type: "case",
+        id: "ecommerce-optimization",
+        status: "Em lançamento",
+        statusColor: "bg-blue-500",
+        statusText: "text-blue-400",
+      },
+    ],
+    []
+  );
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring" as const,
-        damping: 20,
-        stiffness: 100,
+  // Animation variants - memoized for performance
+  const containerVariants: Variants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.2,
+          delayChildren: 0.1,
+        },
       },
-    },
-  };
+    }),
+    []
+  );
 
-  const cardHoverVariants: Variants = {
-    rest: { scale: 1, y: 0 },
-    hover: {
-      scale: 1.02,
-      y: -5,
-      transition: {
-        type: "spring" as const,
-        damping: 25,
-        stiffness: 400,
+  const itemVariants: Variants = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 30 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          type: "spring" as const,
+          damping: 20,
+          stiffness: 100,
+        },
       },
+    }),
+    []
+  );
+
+  const cardHoverVariants: Variants = useMemo(
+    () => ({
+      rest: { scale: 1, y: 0 },
+      hover: {
+        scale: 1.02,
+        y: -5,
+        transition: {
+          type: "spring" as const,
+          damping: 25,
+          stiffness: 400,
+        },
+      },
+    }),
+    []
+  );
+
+  // Memoize navigation handler
+  const handleNavigation = useCallback(
+    (page: string) => {
+      onNavigate(page);
     },
-  };
+    [onNavigate]
+  );
 
   return (
     <motion.div
@@ -399,10 +437,11 @@ export function Home({ onNavigate }: HomeProps) {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}>
               <div className="aspect-square rounded-2xl overflow-hidden bg-card/50 max-w-md mx-auto relative group">
-                <img
+                <OptimizedImage
                   src={professionalImage}
                   alt="Matheus Araujo - Full-stack Developer & Product Strategist"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -431,6 +470,14 @@ export function Home({ onNavigate }: HomeProps) {
         </motion.div>
 
         <div className="container mx-auto px-4 lg:px-6 max-w-6xl relative z-10">
+          <motion.h2
+            className="text-3xl lg:text-4xl mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}>
+            Como posso <span className="text-accent">ajudar</span>
+          </motion.h2>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
             variants={containerVariants}
@@ -757,7 +804,8 @@ export function Home({ onNavigate }: HomeProps) {
                           variant="ghost"
                           size="sm"
                           className="opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => onNavigate("projects")}>
+                          onClick={() => onNavigate("projects")}
+                          aria-label={`Ver detalhes do projeto ${project.title}`}>
                           <motion.div
                             whileHover={{ x: 3 }}
                             transition={{ type: "spring", stiffness: 400, damping: 20 }}>
@@ -810,7 +858,7 @@ export function Home({ onNavigate }: HomeProps) {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url(${techBackground})`,
+              backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
               filter: "blur(8px) brightness(0.6) contrast(1.1)",
               clipPath: "polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%)",
             }}
@@ -820,7 +868,7 @@ export function Home({ onNavigate }: HomeProps) {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url(${techBackground})`,
+              backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
               filter: "brightness(0.6) contrast(1.1)",
               clipPath: "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)",
             }}
