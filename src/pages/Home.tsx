@@ -168,10 +168,6 @@ export function Home({ onNavigate }: HomeProps) {
   // Removed backgroundImage since we're using CSS gradients now
 
   // Memoize heavy computations
-  const lcpImgRef = useRef<HTMLImageElement | null>(null);
-  useEffect(() => {
-    lcpImgRef.current?.setAttribute("fetchpriority", "high");
-  }, []);
   const highlightProjects = useMemo(
     () => [
       /* INFO:
@@ -418,7 +414,7 @@ export function Home({ onNavigate }: HomeProps) {
                   height={564}
                   decoding="async"
                   loading="eager"
-                  ref={lcpImgRef}
+                  fetchPriority="high"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
