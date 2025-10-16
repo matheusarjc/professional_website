@@ -6,7 +6,6 @@ export function ResourceOptimizer() {
     const preloadResources = () => {
       const criticalResources = [
         { href: "/src/assets/4bc528308be412047376ac29fba78acc18182ad8.png", as: "image" },
-        { href: "/src/assets/backgroundtrust.png", as: "image" },
       ];
 
       criticalResources.forEach((resource) => {

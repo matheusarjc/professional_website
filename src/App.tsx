@@ -5,8 +5,6 @@ import { Toaster } from "./components/ui/sonner";
 import { Separator } from "./components/ui/separator";
 import { Users, Mail, MessageSquare } from "lucide-react";
 import { FontOptimizer } from "./components/FontOptimizer";
-import { ResourceOptimizer } from "./components/ResourceOptimizer";
-import { initializePerformanceOptimizations } from "./utils/performance";
 
 // Lazy load pages for better performance
 const Home = lazy(() => import("./pages/Home").then((module) => ({ default: module.Home })));
@@ -36,8 +34,14 @@ export default function App() {
       });
     }
 
-    // Initialize performance optimizations
-    initializePerformanceOptimizations();
+    // Defer performance utilities to idle time (code-split, load after paint)
+    const runPerf = () =>
+      import("./utils/performance").then((m) => m.initializePerformanceOptimizations());
+    if ("requestIdleCallback" in window) {
+      (window as any).requestIdleCallback(runPerf);
+    } else {
+      setTimeout(runPerf, 1500);
+    }
   }, []);
 
   const handleNavigation = (page: string) => {
@@ -64,7 +68,6 @@ export default function App() {
   return (
     <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden">
       <FontOptimizer />
-      <ResourceOptimizer />
       {/* Skip to Content Link for Accessibility */}
       <a
         href="#main-content"

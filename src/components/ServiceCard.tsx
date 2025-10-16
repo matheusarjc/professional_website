@@ -1,7 +1,7 @@
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
 
 interface ServiceCardProps {
   title: string;
@@ -20,7 +20,7 @@ export function ServiceCard({
   ctaText = "Solicitar proposta",
   secondaryCtaText = "Ver projetos",
   onPrimaryAction,
-  onSecondaryAction
+  onSecondaryAction,
 }: ServiceCardProps) {
   return (
     <Card className="group bg-card border-border hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
@@ -35,28 +35,25 @@ export function ServiceCard({
       <CardContent>
         <div className="flex flex-wrap gap-2 mb-6">
           {chips.map((chip, index) => (
-            <Badge 
-              key={index} 
+            <Badge
+              key={index}
               variant="secondary"
-              className="bg-muted text-muted-foreground text-xs"
-            >
+              className="bg-muted text-muted-foreground text-xs">
               {chip}
             </Badge>
           ))}
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button 
+          <Button
             className="bg-primary hover:bg-primary/90 text-primary-foreground flex-1"
-            onClick={onPrimaryAction}
-          >
+            onClick={onPrimaryAction}>
             <MessageCircle className="w-4 h-4 mr-2" />
             {ctaText}
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="border-border text-muted-foreground hover:text-foreground hover:border-accent"
-            onClick={onSecondaryAction}
-          >
+            onClick={onSecondaryAction}>
             {secondaryCtaText}
             <ArrowUpRight className="w-4 h-4 ml-2" />
           </Button>

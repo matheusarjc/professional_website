@@ -1,7 +1,7 @@
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { ExternalLink, Linkedin, Mail } from 'lucide-react';
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { ExternalLink, Linkedin, Mail } from "lucide-react";
 
 interface PartnerCardProps {
   name: string;
@@ -14,15 +14,15 @@ interface PartnerCardProps {
   websiteUrl?: string;
 }
 
-export function PartnerCard({ 
-  name, 
-  role, 
-  specialties, 
-  description, 
+export function PartnerCard({
+  name,
+  role,
+  specialties,
+  description,
   imageUrl,
   linkedinUrl,
   emailUrl,
-  websiteUrl
+  websiteUrl,
 }: PartnerCardProps) {
   return (
     <Card className="bg-card border-border group hover:shadow-lg transition-all duration-300 hover:border-accent/20">
@@ -39,76 +39,63 @@ export function PartnerCard({
         <CardTitle className="text-lg group-hover:text-accent transition-colors duration-200">
           {name}
         </CardTitle>
-        <CardDescription className="text-accent text-sm">
-          {role}
-        </CardDescription>
+        <CardDescription className="text-accent text-sm">{role}</CardDescription>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-2">
           {specialties.map((specialty, index) => (
-            <Badge 
-              key={index} 
-              variant="secondary" 
-              className="text-xs bg-muted/50 text-muted-foreground border-border"
-            >
+            <Badge
+              key={index}
+              variant="secondary"
+              className="text-xs bg-muted/50 text-muted-foreground border-border">
               {specialty}
             </Badge>
           ))}
         </div>
-        
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {description}
-        </p>
-        
+
+        <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+
         <div className="flex items-center justify-center gap-2 pt-2">
           {linkedinUrl && (
             <Button
               variant="outline"
               size="sm"
               asChild
-              className="border-border hover:border-accent/20 hover:text-accent"
-            >
-              <a 
-                href={linkedinUrl} 
-                target="_blank" 
+              className="border-border hover:border-accent/20 hover:text-accent">
+              <a
+                href={linkedinUrl}
+                target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`LinkedIn de ${name}`}
-              >
+                aria-label={`LinkedIn de ${name}`}>
                 <Linkedin className="w-4 h-4" />
               </a>
             </Button>
           )}
-          
+
           {emailUrl && (
             <Button
               variant="outline"
               size="sm"
               asChild
-              className="border-border hover:border-accent/20 hover:text-accent"
-            >
-              <a 
-                href={emailUrl}
-                aria-label={`Email para ${name}`}
-              >
+              className="border-border hover:border-accent/20 hover:text-accent">
+              <a href={emailUrl} aria-label={`Email para ${name}`}>
                 <Mail className="w-4 h-4" />
               </a>
             </Button>
           )}
-          
+
           {websiteUrl && (
             <Button
               variant="outline"
               size="sm"
               asChild
-              className="border-border hover:border-accent/20 hover:text-accent"
-            >
-              <a 
-                href={websiteUrl} 
-                target="_blank" 
+              className="border-border hover:border-accent/20 hover:text-accent">
+              <a
+                href={websiteUrl}
+                target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Website de ${name}`}
-              >
+                aria-label={`Website de ${name}`}>
                 <ExternalLink className="w-4 h-4" />
               </a>
             </Button>

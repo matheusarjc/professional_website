@@ -72,8 +72,5 @@ export const getPerformanceScore = (
 export const RESOURCE_HINTS = {
   DNS_PREFETCH: ["https://fonts.googleapis.com", "https://fonts.gstatic.com"],
   PRECONNECT: ["https://fonts.googleapis.com", "https://fonts.gstatic.com"],
-  PRELOAD: [
-    "/src/assets/4bc528308be412047376ac29fba78acc18182ad8.png",
-    "/src/assets/backgroundtrust.png",
-  ],
+  PRELOAD: ["/src/assets/4bc528308be412047376ac29fba78acc18182ad8.png"],
 } as const;

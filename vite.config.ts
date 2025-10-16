@@ -64,32 +64,73 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ["console.log"],
-        passes: 2,
+        pure_funcs: ["console.log", "console.info", "console.debug", "console.warn"],
+        passes: 3,
         unsafe: true,
         unsafe_comps: true,
         unsafe_math: true,
+        // More aggressive compression
+        hoist_funs: true,
+        hoist_vars: true,
+        reduce_vars: true,
+        collapse_vars: true,
+        sequences: true,
+        dead_code: true,
+        conditionals: true,
+        comparisons: true,
+        evaluate: true,
+        booleans: true,
+        loops: true,
+        unused: true,
+        if_return: true,
+        join_vars: true,
+        side_effects: false,
       },
       mangle: {
         safari10: true,
+        properties: {
+          regex: /^_/,
+        },
       },
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
-          motion: ["motion/react"],
-          ui: ["lucide-react"],
-          radix: [
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu",
-            "@radix-ui/react-tooltip",
-          ],
+        manualChunks: (id) => {
+          // More granular chunking for better caching
+          if (id.includes("node_modules")) {
+            if (id.includes("react") || id.includes("react-dom")) {
+              return "react-vendor";
+            }
+            if (id.includes("motion")) {
+              return "motion";
+            }
+            if (id.includes("lucide")) {
+              return "icons";
+            }
+            if (id.includes("radix")) {
+              return "radix-ui";
+            }
+            if (id.includes("tailwind") || id.includes("clsx")) {
+              return "styles";
+            }
+            return "vendor";
+          }
+
+          // Page-specific chunks
+          if (id.includes("/pages/")) {
+            const pageName = id.split("/pages/")[1]?.split("/")[0];
+            return `page-${pageName}`;
+          }
+
+          // Component chunks
+          if (id.includes("/components/")) {
+            return "components";
+          }
         },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name?.split(".") || [];
           const ext = info[info.length - 1];
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext || "")) {
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp/i.test(ext || "")) {
             return `assets/images/[name]-[hash][extname]`;
           }
           if (/woff2?|eot|ttf|otf/i.test(ext || "")) {
@@ -102,7 +143,8 @@ export default defineConfig({
       },
     },
     reportCompressedSize: false,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500, // Reduced from 1000
+    sourcemap: false, // Disable sourcemaps in production for smaller bundles
   },
   server: {
     port: 3000,

@@ -1,9 +1,9 @@
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
-import { OptimizedImage } from "../components/OptimizedImage";
-// Lazy load background image
-const techBackground = "/src/assets/backgroundtrust.png";
+// Removed OptimizedImage import to reduce bundle size
+// Use CSS gradient instead of heavy background image for better performance
+const techBackground = null; // Removed heavy 22MB image
 import {
   ArrowRight,
   Code2,
@@ -48,7 +48,7 @@ interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
-// Tech Stack Carousel Component
+// Tech Stack Carousel Component - Optimized for Performance
 function TechStackCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -108,82 +108,64 @@ function TechStackCarousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % techItems.length);
-    }, 1300);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [techItems.length]);
 
+  // Show only current item to minimize DOM size
+  const currentItem = techItems[activeIndex];
+  const IconComponent = currentItem.icon;
+
   return (
-    <div className="relative">
-      <div className="flex justify-center items-center gap-6 flex-wrap">
-        {techItems.map((item, index) => {
-          const IconComponent = item.icon;
-          const isActive = index === activeIndex;
-          const isPrevious = index === (activeIndex - 1 + techItems.length) % techItems.length;
-          const isNext = index === (activeIndex + 1) % techItems.length;
+    <div className="relative text-center">
+      {/* Single rotating icon - much simpler DOM */}
+      <motion.div
+        key={currentItem.name}
+        className="inline-flex items-center justify-center p-6 rounded-2xl bg-card/30 border border-border/30 backdrop-blur-sm"
+        initial={{ opacity: 0, scale: 0.8, rotateY: 180 }}
+        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+        exit={{ opacity: 0, scale: 0.8, rotateY: -180 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}>
+        <IconComponent className="w-12 h-12 text-accent" />
+      </motion.div>
 
+      {/* Tech name and description */}
+      <motion.div
+        key={`${currentItem.name}-text`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="mt-4">
+        <h3 className="text-xl font-semibold text-foreground mb-2">{currentItem.name}</h3>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">{currentItem.description}</p>
+      </motion.div>
+
+      {/* Simple progress dots - transform-based to avoid layout thrash */}
+      <div className="flex justify-center mt-6 gap-2">
+        {[0, 1, 2].map((dotIndex) => {
+          const isActive = Math.floor(activeIndex / Math.ceil(techItems.length / 3)) === dotIndex;
           return (
-            <motion.div
-              key={item.name}
-              className="relative group cursor-pointer"
-              animate={{
-                opacity: isActive ? 1 : isPrevious || isNext ? 0.4 : 0.2,
-                scale: isActive ? 1.1 : 1,
+            <div
+              key={dotIndex}
+              className={`h-1 rounded-full origin-left will-change-transform ${
+                isActive ? "bg-accent" : "bg-muted"
+              }`}
+              style={{
+                transform: `scaleX(${isActive ? 2 : 0.6})`,
+                width: 12,
+                opacity: isActive ? 1 : 0.5,
               }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              whileHover={{ scale: 1.15, opacity: 1 }}
-              title={item.description}>
-              <motion.div
-                className="p-3 rounded-xl bg-card/30 border border-border/30 backdrop-blur-sm"
-                animate={{
-                  rotate: isActive ? 360 : 0,
-                }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}>
-                <IconComponent className="w-8 h-8" />
-              </motion.div>
-
-              {/* Tooltip */}
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                {item.name}
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-foreground"></div>
-              </div>
-
-              {/* Glow effect for active item */}
-              {isActive && (
-                <motion.div
-                  className="absolute inset-0 rounded-xl bg-accent/20 blur-sm -z-10"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 0.6, scale: 1.2 }}
-                  transition={{ duration: 0.5 }}
-                />
-              )}
-            </motion.div>
+            />
           );
         })}
-      </div>
-
-      {/* Progress indicator */}
-      <div className="flex justify-center mt-6 gap-2">
-        {techItems.map((_, index) => (
-          <motion.div
-            key={index}
-            className={`h-1 rounded-full transition-all duration-300 ${
-              index === activeIndex ? "bg-accent" : "bg-muted"
-            }`}
-            animate={{
-              width: index === activeIndex ? 32 : 8,
-              opacity: index === activeIndex ? 1 : 0.4,
-            }}
-            transition={{ duration: 0.3 }}
-          />
-        ))}
       </div>
     </div>
   );
 }
 
 export function Home({ onNavigate }: HomeProps) {
-  const backgroundImage = useLazyImage(techBackground);
+  // Removed backgroundImage since we're using CSS gradients now
 
   // Memoize heavy computations
   const highlightProjects = useMemo(
@@ -295,27 +277,14 @@ export function Home({ onNavigate }: HomeProps) {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 pointer-events-none">
-          <motion.div
+          {/* Defer motion above the fold for performance */}
+          <div
             className="absolute w-80 h-80 border border-accent/10 rounded-full"
             style={{ top: "20%", right: "10%" }}
-            animate={{
-              rotate: 360,
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              rotate: { duration: 25, repeat: Infinity, ease: "linear" },
-              scale: { duration: 10, repeat: Infinity, ease: "easeInOut" },
-            }}
           />
-          <motion.div
+          <div
             className="absolute w-32 h-32 bg-primary/10 rounded-full blur-2xl"
-            style={{ bottom: "30%", left: "5%" }}
-            animate={{
-              x: [0, 40, 0],
-              y: [0, -20, 0],
-              opacity: [0.5, 0.8, 0.5],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ bottom: "30%", left: "5%", opacity: 0.5 }}
           />
         </div>
 
@@ -323,7 +292,7 @@ export function Home({ onNavigate }: HomeProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
             <motion.div variants={itemVariants}>
-              <motion.h2
+              <motion.p
                 className="font-light text-2xl text-muted-foreground"
                 initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -336,7 +305,7 @@ export function Home({ onNavigate }: HomeProps) {
                   transition={{ duration: 0.6, delay: 1.0 }}>
                   Product Strategist
                 </motion.span>
-              </motion.h2>
+              </motion.p>
               <motion.h1
                 className="text-4xl lg:text-6xl mb-6 leading-tight font-bold"
                 initial={{ opacity: 0, y: 50 }}
@@ -437,11 +406,16 @@ export function Home({ onNavigate }: HomeProps) {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}>
               <div className="aspect-square rounded-2xl overflow-hidden bg-card/50 max-w-md mx-auto relative group">
-                <OptimizedImage
+                <img
                   src={professionalImage}
                   alt="Matheus Araujo - Full-stack Developer & Product Strategist"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
+                  width={847}
+                  height={564}
+                  decoding="async"
+                  loading="eager"
+                  fetchPriority="high"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -844,40 +818,46 @@ export function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* Trust Signal */}
-      {/* Trust Signal - Inspirational Tech Quote */}
+      {/* Trust Signal - Optimized with CSS gradients instead of heavy images */}
       <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden flex items-center justify-center">
-        {/* Background Image with Parallax */}
-        <motion.div
-          className="absolute inset-0 z-0"
-          initial={{ scale: 1.1 }}
-          whileInView={{ scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          viewport={{ once: true }}>
-          {/* Left side with blur */}
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
-              filter: "blur(8px) brightness(0.6) contrast(1.1)",
-              clipPath: "polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%)",
+        {/* CSS Gradient Background - Much lighter than 22MB image */}
+        <div className="absolute inset-0 z-0">
+          {/* Animated gradient background */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background/80"
+            animate={{
+              background: [
+                "linear-gradient(135deg, rgba(129, 216, 208, 0.2) 0%, rgba(129, 216, 208, 0.1) 50%, rgba(0, 0, 0, 0.8) 100%)",
+                "linear-gradient(135deg, rgba(129, 216, 208, 0.1) 0%, rgba(129, 216, 208, 0.2) 50%, rgba(0, 0, 0, 0.8) 100%)",
+                "linear-gradient(135deg, rgba(129, 216, 208, 0.2) 0%, rgba(129, 216, 208, 0.1) 50%, rgba(0, 0, 0, 0.8) 100%)",
+              ],
             }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          {/* Right side without blur (focus on eyes) */}
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
-              filter: "brightness(0.6) contrast(1.1)",
-              clipPath: "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)",
+          {/* Floating geometric shapes for visual interest */}
+          <motion.div
+            className="absolute w-32 h-32 bg-accent/20 rounded-full blur-xl"
+            style={{ top: "20%", left: "10%" }}
+            animate={{
+              x: [0, 30, 0],
+              y: [0, -20, 0],
+              scale: [1, 1.2, 1],
             }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          {/* Additional overlay for better text contrast */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-accent/10" />
-        </motion.div>
+          <motion.div
+            className="absolute w-24 h-24 bg-primary/20 rounded-full blur-lg"
+            style={{ bottom: "30%", right: "15%" }}
+            animate={{
+              x: [0, -25, 0],
+              y: [0, 15, 0],
+              scale: [1, 0.8, 1],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
 
         {/* Animated Tech Elements */}
         <div className="absolute inset-0 pointer-events-none z-10">

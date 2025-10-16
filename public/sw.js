@@ -4,7 +4,6 @@ const urlsToCache = [
   "/",
   "/index.html",
   "/src/assets/4bc528308be412047376ac29fba78acc18182ad8.png",
-  "/src/assets/backgroundtrust.png",
   "/favicon.ico",
   "/favicon.svg",
 ];
