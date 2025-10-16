@@ -2,6 +2,7 @@
 <html lang="pt-BR" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -35,6 +36,9 @@
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- LCP image hint only on home via standard URL (post-build rename hero.png in assets/images if desired) -->
+    <!-- Avoid global preload to not warn on other routes; rely on fetchpriority via ref in Home.tsx -->
 
     <title>Matheus Araujo | Product Strategist & Owner</title>
   </head>
