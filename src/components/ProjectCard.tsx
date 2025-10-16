@@ -1,7 +1,7 @@
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { ExternalLink } from 'lucide-react';
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { ExternalLink } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -16,7 +16,7 @@ export function ProjectCard({
   description,
   tags,
   externalLink,
-  thumbnailPlaceholder = true
+  thumbnailPlaceholder = true,
 }: ProjectCardProps) {
   return (
     <Card className="group bg-card border-border hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
@@ -38,23 +38,21 @@ export function ProjectCard({
       <CardContent>
         <div className="flex flex-wrap gap-2 mb-4">
           {tags.map((tag, index) => (
-            <Badge 
-              key={index} 
+            <Badge
+              key={index}
               variant="outline"
-              className="text-xs border-border text-muted-foreground"
-            >
+              className="text-xs border-border text-muted-foreground">
               {tag}
             </Badge>
           ))}
         </div>
         {externalLink && (
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             className="border-border text-muted-foreground hover:text-foreground hover:border-accent w-full"
-            onClick={() => window.open(externalLink, '_blank')}
-            aria-label={`Ver projeto ${title} em nova aba`}
-          >
+            onClick={() => window.open(externalLink, "_blank")}
+            aria-label={`Ver projeto ${title} em nova aba`}>
             Ver projeto
             <ExternalLink className="w-4 h-4 ml-2" />
           </Button>
