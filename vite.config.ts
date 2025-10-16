@@ -59,40 +59,7 @@ export default defineConfig({
   build: {
     target: "esnext",
     outDir: "dist",
-    minify: "terser",
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ["console.log", "console.info", "console.debug", "console.warn"],
-        passes: 3,
-        unsafe: true,
-        unsafe_comps: true,
-        unsafe_math: true,
-        // More aggressive compression
-        hoist_funs: true,
-        hoist_vars: true,
-        reduce_vars: true,
-        collapse_vars: true,
-        sequences: true,
-        dead_code: true,
-        conditionals: true,
-        comparisons: true,
-        evaluate: true,
-        booleans: true,
-        loops: true,
-        unused: true,
-        if_return: true,
-        join_vars: true,
-        side_effects: false,
-      },
-      mangle: {
-        safari10: true,
-        properties: {
-          regex: /^_/,
-        },
-      },
-    },
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: (id) => {
