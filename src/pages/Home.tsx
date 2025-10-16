@@ -3,7 +3,7 @@ import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
 // Removed OptimizedImage import to reduce bundle size
 // Use CSS gradient instead of heavy background image for better performance
-const techBackground = null; // Removed heavy 22MB image
+/* const techBackground = null; // Removed heavy 22MB image */
 import {
   ArrowRight,
   Code2,
