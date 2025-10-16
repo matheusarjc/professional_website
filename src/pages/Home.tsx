@@ -18,7 +18,7 @@ import {
   Rocket,
 } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import professionalImage from "figma:asset/4bc528308be412047376ac29fba78acc18182ad8.png";
 
 // Custom hook for lazy loading images
@@ -168,6 +168,10 @@ export function Home({ onNavigate }: HomeProps) {
   // Removed backgroundImage since we're using CSS gradients now
 
   // Memoize heavy computations
+  const lcpImgRef = useRef<HTMLImageElement | null>(null);
+  useEffect(() => {
+    lcpImgRef.current?.setAttribute("fetchpriority", "high");
+  }, []);
   const highlightProjects = useMemo(
     () => [
       /* INFO:
@@ -288,22 +292,22 @@ export function Home({ onNavigate }: HomeProps) {
           />
         </div>
 
-        <div className="container mx-auto px-4 lg:px-6 max-w-6xl relative z-10">
+        <div className="container mx-auto px-4 pt-16 lg:px-6 max-w-6xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
             <motion.div variants={itemVariants}>
               <motion.p
-                className="font-light text-2xl text-muted-foreground"
+                className="font-light text-lg text-muted-foreground lg:text-2xl mt-6"
                 initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}>
-                Software Developer &{" "}
+                Product Strategist &{" "}
                 <motion.span
                   className=""
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 1.0 }}>
-                  Product Strategist
+                  Owner
                 </motion.span>
               </motion.p>
               <motion.h1
@@ -414,7 +418,7 @@ export function Home({ onNavigate }: HomeProps) {
                   height={564}
                   decoding="async"
                   loading="eager"
-                  fetchPriority="high"
+                  ref={lcpImgRef}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

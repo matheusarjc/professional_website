@@ -21,7 +21,8 @@ export default function App() {
 
   // Register Service Worker for offline caching
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
+    // Only register Service Worker in production to avoid dev server issues (HMR/WebSocket)
+    if (import.meta.env.PROD && "serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("/sw.js")
@@ -31,6 +32,11 @@ export default function App() {
           .catch((registrationError) => {
             console.log("SW registration failed: ", registrationError);
           });
+      });
+    } else if ("serviceWorker" in navigator) {
+      // In dev, ensure no active SW interferes with module loading
+      navigator.serviceWorker.getRegistrations().then((regs) => {
+        regs.forEach((r) => r.unregister());
       });
     }
 

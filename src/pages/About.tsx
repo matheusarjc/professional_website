@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import animaLogoSvg from "../assets/logo-anima.svg";
-import fiapSvg from "../assets/fiap.svg";
+import fiapSvg from "../assets/fiap.svg?url";
 import rocketseatSvg from "../assets/rocketseat.svg";
 import aluraSvg from "../assets/alura.svg";
 import infinitySvg from "../assets/IN.svg";
