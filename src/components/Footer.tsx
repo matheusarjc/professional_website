@@ -139,7 +139,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground/80">
-            © 2025 Matheus Araujo • Software Developer & Product Strategist
+            © 2025 Matheus Araujo • Product Strategist & Owner
           </p>
           <button
             onClick={() => {
