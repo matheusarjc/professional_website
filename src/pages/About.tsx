@@ -27,55 +27,6 @@ interface AboutProps {
 }
 
 export function About({ onNavigate }: AboutProps) {
-  const technicalSkills = [
-    "React/Next.js",
-    "Node.js/Express",
-    "PostgreSQL/MongoDB",
-    "TypeScript",
-    "WCAG 2.1 AA",
-    "Jest/Cypress",
-    "Docker/CI/CD",
-    "AWS/Vercel",
-  ];
-
-  const productSkills = [
-    "Product Discovery",
-    "Roadmap Planning",
-    "Pricing Strategy",
-    "User Analytics",
-    "A/B Testing",
-    "Growth Metrics",
-    "Stakeholder Management",
-    "Technical Documentation",
-  ];
-
-  const formations = [
-    {
-      title: "Engenharia de Software",
-      institution: "Universidade Federal",
-      period: "2019 - 2023",
-      type: "Graduação",
-    },
-    {
-      title: "Product Management",
-      institution: "Product School",
-      period: "2023",
-      type: "Certificação",
-    },
-    {
-      title: "WCAG 2.1 Accessibility",
-      institution: "W3C",
-      period: "2024",
-      type: "Certificação",
-    },
-    {
-      title: "AWS Solutions Architect",
-      institution: "Amazon Web Services",
-      period: "2024",
-      type: "Certificação",
-    },
-  ];
-
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -433,7 +384,7 @@ export function About({ onNavigate }: AboutProps) {
                 <div className="flex justify-center mb-3">
                   <TrendingUp className="w-6 h-6 text-foreground" />
                 </div>
-                <div className="text-3xl font-bold text-accent mb-2">5+</div>
+                <div className="text-3xl font-bold text-accent mb-2">4</div>
                 <p className="text-sm text-muted-foreground">
                   anos desenvolvendo produtos digitais
                 </p>

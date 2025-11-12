@@ -1067,7 +1067,7 @@ export function Home({ onNavigate }: HomeProps) {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}>
                 {[
-                  { value: "5+", label: "Anos de experiência" },
+                  { value: "4+", label: "Anos de experiência" },
                   { value: "7", label: "Projetos end-to-end entregues" },
                 ].map((stat, index) => (
                   <motion.div
